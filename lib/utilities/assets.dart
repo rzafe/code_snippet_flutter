@@ -10,6 +10,7 @@ class Assets {
 
   /// Images -------------------------------------------------------------------
   static const String imgBG1 = 'assets/images/img_bg1.png';
+  static const String imgFlag = 'assets/images/img_flag.png';
 
   /// JSON ---------------------------------------------------------------------
   static const String jsonNoConnection = 'assets/json/no_connection.json';
