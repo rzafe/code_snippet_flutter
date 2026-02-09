@@ -1,6 +1,7 @@
 export 'bg_widget.dart';
 export 'camera_2x2.dart';
 export 'custom_animated_card.dart';
+export 'custom_broken_line.dart';
 export 'custom_bullet_text.dart';
 export 'custom_button.dart';
 export 'custom_card.dart';
@@ -19,6 +20,7 @@ export 'custom_text_resize.dart';
 export 'custom_textfield.dart';
 export 'custom_upload_file.dart';
 export 'form_date_picker_ios.dart';
+export 'form_details.dart';
 export 'form_dropdown_button.dart';
 export 'form_required_label.dart';
 export 'form_step_indicator.dart';
