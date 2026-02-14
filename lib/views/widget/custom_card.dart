@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
@@ -17,6 +16,7 @@ class CustomCard extends StatelessWidget {
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onTap,
+    this.hasShadow = true,
   });
 
   final double? width;
@@ -31,15 +31,22 @@ class CustomCard extends StatelessWidget {
   final Widget? child;
   final bool visible;
   final EdgeInsets margin;
-  final Function()? onTap;
+  final VoidCallback? onTap;
+  final bool hasShadow;
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: visible,
-      child: Padding(
-        padding: margin,
-        child: GestureDetector(
+    if (!visible) return const SizedBox.shrink();
+
+    final BorderRadius border = BorderRadius.circular(borderRadius);
+
+    return Padding(
+      padding: margin,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: border,
+        child: InkWell(
+          borderRadius: border,
           onTap: onTap,
           child: Container(
             padding: padding,
@@ -47,15 +54,15 @@ class CustomCard extends StatelessWidget {
             height: height,
             decoration: BoxDecoration(
               color: bgColor ?? Colors.white,
-              borderRadius: BorderRadius.circular(borderRadius),
-              boxShadow: [
+              borderRadius: border,
+              boxShadow: hasShadow ? [
                 BoxShadow(
-                  color: boxShadowColor ?? Colors.grey.withValues(alpha: 0.5),
+                  color: boxShadowColor ?? Colors.black26,
                   spreadRadius: spreadRadius ?? 1,
-                  blurRadius: blurRadius ?? 2,
-                  offset: offset ?? Offset(0, 2), /// changes position of shadow
+                  blurRadius: blurRadius ?? 4,
+                  offset: offset ?? const Offset(0, 2),
                 ),
-              ],
+              ] : null,
             ),
             child: child,
           ),

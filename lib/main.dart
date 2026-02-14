@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'utilities/global.dart';
-import 'utilities/helpers.dart';
-import 'views/widget/custom_textfield.dart';
-import 'views/widget/form_dropdown_button.dart';
+import 'utilities/_utils.dart';
+import 'views/widget/_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -112,60 +110,83 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: .center,
           children: [
-            FormDefaultPicker(
-              item: religionList,
-              value: selected,
-              hint: 'Select Gender',
-              hasUnderline: true,
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              onChanged: (val) {
-                setState(() => selected = val);
+            CustomCard(
+              margin: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
+              borderRadius: 16,
+              onTap: () {
+                debugPrint("Card tapped");
               },
-            ),
-            Gap(20),
-            FormDefaultPicker(
-              item: religionList,
-              value: selected,
-              hint: 'Select Gender',
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              onChanged: (val) {
-                setState(() => selected = val);
-              },
-            ),
-            Gap(20),
-            CustomTextField.date(
-              controller: controller,
-              hintText: 'Mobile Number',
-              borderRadius: 25,
-              // readOnly: true,
-              // enabled: false,
-              maxLines: 1,
-              maxLength: 10,
-              // fillColor: backgroundColor,
-              formLabel: 'dfdf',
-              formMargin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              onChanged: (phone) {
-                if (phone.length == 10) {
-                  FocusScope.of(context).unfocus();
-                }
-              },
-              suffixIcon: IconTextFieldWidget(
-                iconData: Icons.clear,
-                margin: EdgeInsets.only(right: 10),
-                // onTap: onTapClear,
+              child: const Text(
+                "Hello Custom Card",
+                style: TextStyle(fontSize: 16),
               ),
-              onTap: () async {
-                DateTime? dateTime = await callCalendar(context);
-                String date = dateTime != null ? formatDate(dateTime) : '';
-                setState(() {
-                  controller.text = date;
-                });
-              },
             ),
+
+            // FormDefaultPicker(
+            //   item: religionList,
+            //   value: selected,
+            //   hint: 'Select Gender',
+            //   hasUnderline: true,
+            //   margin: EdgeInsets.symmetric(horizontal: 16),
+            //   onChanged: (val) {
+            //     setState(() => selected = val);
+            //   },
+            // ),
+            // Gap(20),
+            // FormDefaultPicker(
+            //   item: religionList,
+            //   value: selected,
+            //   hint: 'Select Gender',
+            //   margin: EdgeInsets.symmetric(horizontal: 16),
+            //   onChanged: (val) {
+            //     setState(() => selected = val);
+            //   },
+            // ),
+
+            Gap(20),
+            // CustomTextField.date(
+            //   controller: controller,
+            //   hintText: 'Mobile Number',
+            //   borderRadius: 25,
+            //   // readOnly: true,
+            //   // enabled: false,
+            //   maxLines: 1,
+            //   maxLength: 10,
+            //   // fillColor: backgroundColor,
+            //   formLabel: 'dfdf',
+            //   formMargin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            //   onChanged: (phone) {
+            //     if (phone.length == 10) {
+            //       FocusScope.of(context).unfocus();
+            //     }
+            //   },
+            //   suffixIcon: IconTextFieldWidget(
+            //     iconData: Icons.clear,
+            //     margin: EdgeInsets.only(right: 10),
+            //     // onTap: onTapClear,
+            //   ),
+            //   onTap: () async {
+            //     DateTime? dateTime = await callCalendar(context);
+            //     String date = dateTime != null ? formatDate(dateTime) : '';
+            //     setState(() {
+            //       controller.text = date;
+            //     });
+            //   },
+            // ),
+
             // Text(formatNumber('10000.545')),
             // Text(
             //   '$_counter',
             //   style: Theme.of(context).textTheme.headlineMedium,
+            // ),
+
+            // CustomAnimatedCard(
+            //   height: 50,
+            //   title: 'dgg',
+            //   icon: Icons.eighteen_mp,
+            //   backgroundColor: Colors.red,
+            //   onClick: () {},
             // ),
           ],
         ),

@@ -7,20 +7,22 @@ import '_widget.dart';
 class CustomButton extends StatelessWidget {
   final String title;
   final Color textColor;
-  final Color buttonColor;
-  final Color? borderColor;
-  final double borderRadius;
   final double fontSize;
-  final double? elevation;
-  final double? buttonWidth;
-  final double? buttonHeight;
-  final double? borderWidth;
   final FontWeight fontWeight;
   final FontStyle? fontStyle;
   final String? fontFamily;
-  final EdgeInsetsGeometry? paddingButton;
-  final bool isCustomFont;
+
+  final double? buttonWidth;
+  final double? buttonHeight;
+  final Color buttonColor;
+  final Color? borderColor;
+  final double borderRadius;
+  final double? borderWidth;
+  final double? elevation;
   final Size? minimumSize;
+  final EdgeInsetsGeometry? paddingButton;
+
+  final bool isCustomFont;
   final bool visible;
   final EdgeInsets margin;
   final Function()? onTap;
@@ -33,20 +35,22 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.title,
     this.textColor = Colors.white,
-    this.buttonColor = primaryColor,
-    this.borderColor,
-    this.borderRadius = 10,
     this.fontSize = 15,
-    this.elevation,
-    this.buttonWidth,
-    this.buttonHeight,
-    this.borderWidth,
     this.fontWeight = FontWeight.bold,
     this.fontStyle,
     this.fontFamily,
-    this.paddingButton,
-    this.isCustomFont = true,
+
+    this.buttonWidth,
+    this.buttonHeight,
+    this.buttonColor = primaryColor,
+    this.borderColor,
+    this.borderRadius = 10,
+    this.borderWidth,
+    this.elevation,
     this.minimumSize,
+    this.paddingButton,
+
+    this.isCustomFont = true,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onTap,

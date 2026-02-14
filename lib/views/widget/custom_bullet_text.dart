@@ -46,14 +46,16 @@ class CustomBulletText extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomText(
-              title: bullet,
-              fontSize: bulletSize ?? 13,
-              textColor: bulletColor ?? Colors.black,
-              fontWeight: bulletFontWeight ?? FontWeight.normal,
-              maxLines: 1,
-            ),
-            SizedBox(width: bullet.isNotEmpty ? 5 : 0,),
+            if (bullet.isNotEmpty) ...[
+              CustomText(
+                title: bullet,
+                fontSize: bulletSize ?? 13,
+                textColor: bulletColor ?? Colors.black,
+                fontWeight: bulletFontWeight ?? FontWeight.normal,
+                maxLines: 1,
+              ),
+              SizedBox(width: 5),
+            ],
             Expanded(
               child: CustomText(
                 title: title,
