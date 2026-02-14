@@ -11,11 +11,13 @@ class CustomTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final String? labelText;
   final String? hintText;
-  final bool readOnly;
+  final bool? readOnly;
   final bool? enabled;
-  final bool obscureText;
-  final bool useOutlineBorder;
+  final bool? obscureText;
+  final bool? useOutlineBorder;
   final bool? filled;
+  final bool? enableInteractiveSelection;
+  final bool? alignLabelWithHint;
   final TextInputType? keyboardType;
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
@@ -32,14 +34,18 @@ class CustomTextField extends StatelessWidget {
   final int? hintMaxLines;
   final int? errorMaxLines;
   final double? fontSize;
-  final double borderRadius;
+  final double? labelFontSize;
+  final double? hintFontSize;
+  final double? borderRadius;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+
   final double? widthField;
   final double? heightField;
-  final bool isCustomFont;
+  final bool? isCustomFont;
   final bool visible;
   final EdgeInsets margin;
+
   final Function(String)? onSubmitted;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
@@ -52,11 +58,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -72,13 +80,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -94,11 +104,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -114,13 +126,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -136,11 +150,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.number,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -156,13 +172,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -178,11 +196,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.emailAddress,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -198,13 +218,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -220,11 +242,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.number,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -240,13 +264,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -262,11 +288,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.number,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -282,13 +310,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -304,11 +334,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -324,13 +356,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -348,9 +382,11 @@ class CustomTextField extends StatelessWidget {
     this.hintText = 'YYYY-MM-DD',
     this.readOnly = true,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.number,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -366,13 +402,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -390,9 +428,11 @@ class CustomTextField extends StatelessWidget {
     this.hintText = '00:00 PM',
     this.readOnly = true,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.number,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -408,13 +448,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -430,11 +472,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText = 'Search',
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
-    this.obscureText = false,
-    this.useOutlineBorder = true,
+    this.obscureText,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -450,13 +494,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -472,11 +518,13 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.labelText,
     this.hintText,
-    this.readOnly = false,
+    this.readOnly,
     this.enabled,
     this.obscureText = true,
-    this.useOutlineBorder = true,
+    this.useOutlineBorder,
     this.filled,
+    this.enableInteractiveSelection,
+    this.alignLabelWithHint,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -492,13 +540,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.hintMaxLines,
     this.errorMaxLines,
-    this.fontSize = 15,
-    this.borderRadius = 10,
+    this.fontSize,
+    this.labelFontSize,
+    this.hintFontSize,
+    this.borderRadius,
     this.prefixIcon,
     this.suffixIcon,
     this.widthField,
     this.heightField,
-    this.isCustomFont = true,
+    this.isCustomFont,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onSubmitted,
@@ -507,29 +557,72 @@ class CustomTextField extends StatelessWidget {
     this.onTap,
   });
 
+  /// Determines input formatters based on textFieldType
+  List<TextInputFormatter>? _getInputFormatters() {
+    List<TextInputFormatter> defaultFormatters = [];
+
+    switch (textFieldType) {
+      case 'name':
+        defaultFormatters.add(FilteringTextInputFormatter.allow(RegExp(r"[0-9a-zA-Z ñÑ]")));
+        break;
+      case 'pin':
+        defaultFormatters.addAll([
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(maxLength ?? 4),
+        ]);
+        break;
+      case 'mobile':
+      case 'number':
+        defaultFormatters.add(FilteringTextInputFormatter.digitsOnly);
+        break;
+      case 'decimal':
+        defaultFormatters.add(FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')));
+        break;
+    }
+
+    // Merge with user-provided inputFormatters if any
+    if (inputFormatters != null && inputFormatters!.isNotEmpty) {
+      defaultFormatters.addAll(inputFormatters!);
+    }
+
+    return defaultFormatters.isEmpty ? null : defaultFormatters;
+  }
+
+  InputBorder _buildBorder({Color? color, double width = 1.0}) {
+    final bool outline = useOutlineBorder ?? true;
+
+    if (outline) {
+      return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(borderRadius ?? 10),
+        borderSide: BorderSide(
+          color: color ?? primaryColor,
+          width: width,
+        ),
+      );
+    } else {
+      return UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: color ?? Colors.grey,
+          width: width,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<TextInputFormatter>? textInput() {
-      if (textFieldType == 'name') {
-        return [
-          FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z ñÑ]")),
-        ];
-      } else if (textFieldType == 'pin') {
-        return [
-          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-          LengthLimitingTextInputFormatter(4),
-        ];
-      } else if (textFieldType == 'mobile' || textFieldType == 'number') {
-        return [
-          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        ];
-      } else if (textFieldType == 'decimal') {
-        return [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-        ];
-      }
-      return inputFormatters;
-    }
+    final bool custom = isCustomFont ?? true;
+    final TextStyle textStyle = custom
+        ? GoogleFonts.poppins(color: styleColor ?? Colors.black, fontSize: fontSize ?? 15)
+        : TextStyle(color: styleColor ?? Colors.black, fontSize: fontSize ?? 15);
+
+    final TextStyle labelStyle = custom
+        ? GoogleFonts.poppins(color: labelTextColor ?? Colors.grey[700], fontSize: labelFontSize ?? 15)
+        : TextStyle(color: labelTextColor ?? Colors.grey[700], fontSize: labelFontSize ?? 15);
+
+    final TextStyle hintStyle = custom
+        ? GoogleFonts.poppins(color: hintTextColor ?? Colors.grey, fontSize: hintFontSize ?? 15)
+        : TextStyle(color: hintTextColor ?? Colors.grey, fontSize: hintFontSize ?? 15);
 
     return Visibility(
       visible: visible,
@@ -541,36 +634,20 @@ class CustomTextField extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             focusNode: focusNode,
-            enableInteractiveSelection: false,
-            readOnly: readOnly,
+            enableInteractiveSelection: enableInteractiveSelection ?? false,
+            readOnly: readOnly ?? false,
             enabled: enabled,
-            obscureText: obscureText,
+            obscureText: obscureText ?? false,
             keyboardType: keyboardType,
             textCapitalization: textCapitalization,
-            inputFormatters: textInput(),
-            style: isCustomFont
-                ? GoogleFonts.poppins(
-                    color: styleColor ?? Colors.black,
-                    fontSize: fontSize ?? 15,
-                  )
-                : TextStyle(
-                    color: styleColor ?? Colors.black,
-                    fontSize: fontSize ?? 15,
-                  ),
+            inputFormatters: _getInputFormatters(),
+            style: textStyle,
             maxLength: maxLength,
             maxLines: maxLines,
             decoration: InputDecoration(
               contentPadding: contentPadding,
               labelText: labelText,
-              labelStyle: isCustomFont
-                  ? GoogleFonts.poppins(
-                      color: labelTextColor ?? Colors.grey[700],
-                      fontSize: fontSize ?? 15,
-                    )
-                  : TextStyle(
-                      color: labelTextColor ?? Colors.grey[700],
-                      fontSize: fontSize ?? 15,
-                    ),
+              labelStyle: labelStyle,
               suffixIconConstraints: const BoxConstraints(
                 minWidth: 24,
                 minHeight: 24,
@@ -580,17 +657,9 @@ class CustomTextField extends StatelessWidget {
                 minHeight: 24,
               ),
               floatingLabelBehavior: floatingLabelBehavior ?? FloatingLabelBehavior.never,
-              alignLabelWithHint: true,
+              alignLabelWithHint: alignLabelWithHint ?? true,
               hintText: hintText,
-              hintStyle: isCustomFont
-                  ? GoogleFonts.poppins(
-                      color: hintTextColor ?? Colors.grey,
-                      fontSize: fontSize ?? 15,
-                    )
-                  : TextStyle(
-                      color: hintTextColor ?? Colors.grey,
-                      fontSize: fontSize ?? 15,
-                    ),
+              hintStyle: hintStyle,
               hintMaxLines: hintMaxLines,
               counterText: '',
               errorMaxLines: errorMaxLines,
@@ -598,35 +667,9 @@ class CustomTextField extends StatelessWidget {
               filled: filled ?? true,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-              border: useOutlineBorder
-                  ? OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    )
-                  : UnderlineInputBorder(
-                      borderSide: BorderSide(color: enabledBorderColor ?? Colors.grey),
-                    ),
-              enabledBorder: useOutlineBorder
-                  ? OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                      borderSide: BorderSide(
-                        color: enabledBorderColor ?? primaryColor,
-                        width: 0.5,
-                      ),
-                    )
-                  : UnderlineInputBorder(
-                      borderSide: BorderSide(color: enabledBorderColor ?? Colors.grey),
-                    ),
-              focusedBorder: useOutlineBorder
-                  ? OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                      borderSide: BorderSide(
-                        color: focusedBorderColor ?? primaryColor,
-                        width: 1.5,
-                      ),
-                    )
-                  : UnderlineInputBorder(
-                      borderSide: BorderSide(color: enabledBorderColor ?? Colors.grey),
-                    ),
+              border: _buildBorder(color: enabledBorderColor, width: 0.5),
+              enabledBorder: _buildBorder(color: enabledBorderColor, width: 0.5),
+              focusedBorder: _buildBorder(color: focusedBorderColor, width: 1.5),
             ),
             onFieldSubmitted: onSubmitted,
             validator: validator,
@@ -667,51 +710,6 @@ class IconTextFieldWidget extends StatelessWidget {
           color: iconColor,
           size: iconSize,
         ),
-      ),
-    );
-  }
-}
-
-/// Prefix Icon Mobile ---------------------------------------------------------
-class PrefixIconMobile extends StatelessWidget {
-  const PrefixIconMobile({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-      child: Text(
-        '+63 ',
-        style: TextStyle(
-          color: Colors.grey,
-          fontSize: 14,
-        ),
-      ),
-    );
-  }
-}
-
-/// Prefix Icon Date -----------------------------------------------------------
-class PrefixIconDate extends StatelessWidget {
-  const PrefixIconDate({
-    super.key,
-    this.iconData,
-    this.size,
-    this.color,
-  });
-
-  final IconData? iconData;
-  final double? size;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      child: Icon(
-        iconData ?? Icons.calendar_today_outlined,
-        size: size ?? 20,
-        color: color ?? Colors.grey,
       ),
     );
   }

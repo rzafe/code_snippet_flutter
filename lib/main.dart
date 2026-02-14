@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'utilities/helpers.dart';
+import 'views/widget/custom_textfield.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,6 +57,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final controller = TextEditingController();
   int _counter = 0;
 
   void _incrementCounter() {
@@ -106,6 +108,33 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: .center,
           children: [
+            CustomTextField.date(
+              controller: controller,
+              hintText: 'Mobile Number',
+              borderRadius: 25,
+              // readOnly: true,
+              // enabled: false,
+              maxLines: 1,
+              maxLength: 10,
+              // fillColor: backgroundColor,
+              onChanged: (phone) {
+                if (phone.length == 10) {
+                  FocusScope.of(context).unfocus();
+                }
+              },
+              suffixIcon: IconTextFieldWidget(
+                iconData: Icons.clear,
+                margin: EdgeInsets.only(right: 10),
+                // onTap: onTapClear,
+              ),
+              onTap: () async {
+                DateTime? dateTime = await callCalendar(context);
+                String date = dateTime != null ? formatDate(dateTime) : '';
+                setState(() {
+                  controller.text = date;
+                });
+              },
+            ),
             Text(formatNumber('10000.545')),
             Text(
               '$_counter',
