@@ -1,6 +1,6 @@
 
 /// DEVELOPMENT
-const bool isProduction = true;
+const bool isProduction = false;
 
 /// CMS CONSTANTS
 const String baseURL = 'https://b4w9hdnsh4.execute-api.ap-southeast-1.amazonaws.com/production/';

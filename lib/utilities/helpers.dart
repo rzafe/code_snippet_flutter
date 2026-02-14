@@ -243,7 +243,31 @@ String generateRandomString(int len) {
   return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
 }
 
-/// ----------------------------------------------------------------------------
+/// Files ----------------------------------------------------------------------
+Future<void> clearCache() async {
+  try {
+    final cacheDir = await getTemporaryDirectory();
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+      printDebug('Cache cleared.');
+    }
+  } catch (e) {
+    printDebug('Error clearing cache: $e');
+  }
+}
+
+Future<void> clearAppData() async {
+  try {
+    final appDir = await getApplicationDocumentsDirectory();
+    if (appDir.existsSync()) {
+      appDir.deleteSync(recursive: true);
+      printDebug('App data directory cleared.');
+    }
+  } catch (e) {
+    printDebug('Error clearing app data: $e');
+  }
+}
+
 String getFileExtension(String filePath) {
   return extension(filePath);
 }
@@ -300,7 +324,7 @@ Future<File> saveSignatureImage(Uint8List bytes) async {
   return await File("${tempDir.path}/signature.jpg").writeAsBytes(bytes);
 }
 
-Future<File?> pickFile() async {
+Future<File?> pickImageFile() async {
   try {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.image,
@@ -342,47 +366,9 @@ Future<File?> pickFile() async {
     showToastError(message: 'Something went wrong while picking the file.');
     return null;
   }
-
-  /// OLD Code
-  // File? file;
-  // FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //   type: FileType.image,
-  //   // allowedExtensions: ['pdf', 'doc', 'docx'],
-  // );
-  //
-  // if (result != null && result.files.single.path != null) {
-  //   file = File(result.files.single.path!);
-  // } else {
-  //   showToastError('File pick canceled');
-  // }
-  //
-  // return file;
 }
 
-Future<void> clearCache() async {
-  try {
-    final cacheDir = await getTemporaryDirectory();
-    if (cacheDir.existsSync()) {
-      cacheDir.deleteSync(recursive: true);
-      printDebug('Cache cleared.');
-    }
-  } catch (e) {
-    printDebug('Error clearing cache: $e');
-  }
-}
-
-Future<void> clearAppData() async {
-  try {
-    final appDir = await getApplicationDocumentsDirectory();
-    if (appDir.existsSync()) {
-      appDir.deleteSync(recursive: true);
-      printDebug('App data directory cleared.');
-    }
-  } catch (e) {
-    printDebug('Error clearing app data: $e');
-  }
-}
-
+/// ----------------------------------------------------------------------------
 bool isEmailValid(String email) {
   return RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
@@ -392,29 +378,6 @@ bool isEmailValid(String email) {
 bool isValidUrl(String url) {
   final uri = Uri.tryParse(url);
   return uri != null && (uri.isScheme('http') || uri.isScheme('https')) && uri.host.isNotEmpty;
-}
-
-void makePhoneCall(String phoneNumber) async {
-  final Uri url = Uri(scheme: 'tel', path: phoneNumber);
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
-String computeAgeFromBirthDate(DateTime? birthDate) {
-  if (birthDate == null) return '';
-
-  final now = DateTime.now();
-  int age = now.year - birthDate.year;
-
-  if (now.month < birthDate.month ||
-      (now.month == birthDate.month && now.day < birthDate.day)) {
-    age--;
-  }
-
-  return age.toString();
 }
 
 String capitalize(String input) =>
@@ -432,6 +395,17 @@ String getFullName({String firstname = '', String middlename = '', String lastna
   return parts.join(' ');
 }
 
+String normalizeSex(String? value) {
+  if (value == null) return '';
+
+  final v = value.trim().toUpperCase();
+
+  if (v == 'M') return 'MALE';
+  if (v == 'F') return 'FEMALE';
+
+  return value; // Return original (e.g., "MALE", "FEMALE", or other)
+}
+
 Future<String> getAddressFromLatLng(double lat, double lng) async {
   try {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
@@ -445,6 +419,59 @@ Future<String> getAddressFromLatLng(double lat, double lng) async {
   }
 }
 
+/// Show Google Map ------------------------------------------------------------
+Future<void> openGoogleMapsNavigation(double? lat, double? lng) async {
+  if (lat == null || lng == null) {
+    // Optionally log or show a snackbar/toast here
+    return;
+  }
+
+  final Uri url = Uri.parse(
+    'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng',
+  );
+
+  await launchUrl(url, mode: LaunchMode.externalApplication);
+}
+
+Future<void> openGoogleMaps(double? lat, double? lng) async {
+  if (lat == null || lng == null) {
+    // Optionally log or show a snackbar/toast here
+    return;
+  }
+
+  // Optional but recommended: validate coordinate range
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+    return;
+  }
+
+  final Uri url = Uri.parse(
+    'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+  );
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
+  } else {
+    throw 'Could not open Google Maps';
+  }
+}
+
+Future<void> openGoogleMapsByName(String? place) async {
+  if (place == null || place.trim().isEmpty) {
+    // Optionally log or show a snackbar/toast here
+    return;
+  }
+
+  final Uri url = Uri.parse(
+    'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(place)}',
+  );
+
+  await launchUrl(url, mode: LaunchMode.externalApplication);
+}
+
+/// Secure Storage -------------------------------------------------------------
 AndroidOptions _getAndroidOptions() => const AndroidOptions(
   encryptedSharedPreferences: true,
 );
@@ -454,27 +481,13 @@ Future<void> writeSecureStorage({required String key, required dynamic value}) a
   await storage.write(key: key, value: value);
 }
 
-Future<String?> getSecureStorage({required String key}) async {
+Future<String?> readSecureStorage({required String key}) async {
   final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
   String? value = await storage.read(key: key);
   return value;
 }
 
 /// Other Format ---------------------------------------------------------------
-String formatPhoneNumber(String? mobileNumber) {
-  if (mobileNumber == null || mobileNumber.isEmpty) return '';
-
-  return mobileNumber.startsWith('0') ? mobileNumber : '0$mobileNumber';
-}
-
-String formatPhoneNumber2(String? mobileNumber) {
-  if (mobileNumber == null || mobileNumber.isEmpty) return '';
-
-  return mobileNumber.startsWith('0')
-      ? mobileNumber.substring(1)
-      : mobileNumber;
-}
-
 String formatNumber(String? number) {
   if (number == null || number.isEmpty) return '';
 
@@ -486,6 +499,65 @@ String formatNumber(String? number) {
   }
 }
 
+/// Phone Format ---------------------------------------------------------------
+String formatPhoneNumber(String? mobileNumber) {
+  if (mobileNumber == null || mobileNumber.trim().isEmpty) return '';
+
+  // remove spaces, dashes, parentheses
+  String num = mobileNumber.replaceAll(RegExp(r'[\s\-\(\)]'), '');
+
+  // convert international formats
+  if (num.startsWith('+63')) {
+    num = '0${num.substring(3)}';
+  } else if (num.startsWith('63')) {
+    num = '0${num.substring(2)}';
+  } else if (!num.startsWith('0')) {
+    num = '0$num';
+  }
+
+  // validate Philippine mobile (11 digits, starts with 09)
+  final phRegex = RegExp(r'^09\d{9}$');
+
+  return phRegex.hasMatch(num) ? num : '';
+}
+
+String formatPhoneNumber2(String? mobileNumber) {
+  if (mobileNumber == null || mobileNumber.trim().isEmpty) return '';
+
+  // Remove spaces, dashes, parentheses
+  String num = mobileNumber.replaceAll(RegExp(r'[\s\-\(\)]'), '');
+
+  // Convert international formats to local first
+  if (num.startsWith('+63')) {
+    num = '0${num.substring(3)}';
+  } else if (num.startsWith('63')) {
+    num = '0${num.substring(2)}';
+  } else if (!num.startsWith('0')) {
+    num = '0$num';
+  }
+
+  // Validate Philippine mobile number
+  final phRegex = RegExp(r'^09\d{9}$');
+
+  if (!phRegex.hasMatch(num)) return '';
+
+  // Remove leading 0 before returning
+  return num.substring(1);
+}
+
+bool isValidPHPhone(String? mobileNumber) {
+  return formatPhoneNumber(mobileNumber).isNotEmpty;
+}
+
+void makePhoneCall(String phoneNumber) async {
+  final Uri url = Uri(scheme: 'tel', path: phoneNumber);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
 /// Date and Time --------------------------------------------------------------
 DateTime? parseDateByString(String? value) {
   if (value == null || value.isEmpty) return null;
@@ -493,113 +565,65 @@ DateTime? parseDateByString(String? value) {
 }
 
 String getTimeAgo(DateTime? date) {
-  return (date != null) ? timeago.format(date) : '';
+  return (date != null) ? timeago.format(date) : ''; //e.g a moment ago
 }
 
 String formatDate(DateTime? date) {
+  //e.g. February 14, 2025
   return (date != null) ? DateFormat('MMMM dd, yyyy').format(date) : '';
 }
 
 String formatDate2(DateTime? date) {
+  //e.g 2026-02-14
   return (date != null) ? DateFormat('yyyy-MM-dd').format(date) : '';
 }
 
 String formatDate3(DateTime? date) {
+  //e.g. 02/14/2026
   return (date != null) ? DateFormat('MM/dd/yyyy').format(date) : '';
 }
 
 String formatDate4(DateTime? date) {
-  return (date != null) ? DateFormat('MMMM dd').format(date) : '';
-}
-
-String formatDate5(DateTime? date) {
+  //e.g. 02-14-2026
   return (date != null) ? DateFormat('MM-dd-yyyy').format(date) : '';
 }
 
 String formatDateWithTime(DateTime? date) {
+  //e.g. February 14, 2026 08:31AM
   return (date != null) ? DateFormat('MMMM dd, yyyy hh:mma').format(date) : '';
 }
 
 String formatTime(DateTime? date) {
+  //e.g 08:35 AM
   return (date != null) ? DateFormat('hh:mm a').format(date) : '';
 }
 
-String formatTime2(String? time24) {
-  if (time24 == null || time24.trim().isEmpty) {
-    return ""; // or return "--:--" or "N/A"
-  }
+String formatTimeBy24Hours(String? time24) {
+  if (time24 == null || time24.trim().isEmpty) return '';
 
   try {
-    final inputFormat = DateFormat("HH:mm:ss");   // 24-hour format
-    final outputFormat = DateFormat("h:mm a");    // 12-hour format
+    DateTime dateTime;
 
-    final dateTime = inputFormat.parse(time24);
-    return outputFormat.format(dateTime);
-  } catch (e) {
-    // if parsing fails (invalid format)
-    return "";
+    if (time24.length == 5) {
+      dateTime = DateFormat('HH:mm').parse(time24);
+    } else {
+      dateTime = DateFormat('HH:mm:ss').parse(time24);
+    }
+
+    return DateFormat('h:mm a').format(dateTime); //e.g 8:35 AM
+  } catch (_) {
+    return '';
   }
 }
 
-String formatTimeToString(TimeOfDay time) {
+String formatTimeByTimeOfDay(TimeOfDay time) {
   final now = DateTime.now();
   final dateTime = DateTime(now.year, now.month, now.day, time.hour, time.minute);
   return DateFormat('hh:mm a').format(dateTime); // e.g., "03:30 PM"
 }
 
-String formatTimeNew(String? date) {
-  if (date == null || date.isEmpty) return '';
-  try {
-    final parsed = DateTime.tryParse(date);
-    if (parsed == null) return '';
-    // final formattedDate = DateFormat('MMM d, yyyy').format(parsed); // Aug 13, 2025
-    final formattedTime = DateFormat('h:mm a').format(parsed); // 11:28 PM
-    return formattedTime;
-  } catch (_) {
-    return '';
-  }
-}
-
-String formatNewDate(String? date) {
-  if (date == null || date.isEmpty) return '';
-  try {
-    final parsed = DateTime.tryParse(date);
-    if (parsed == null) return '';
-    final formattedDate = DateFormat('MMMM d, yyyy').format(parsed); // Aug 13, 2025
-    // final formattedTime = DateFormat('h:mm a').format(parsed); // 11:28 PM
-    return formattedDate;
-  } catch (_) {
-    return '';
-  }
-}
-
-String formatNewDateTime(String? date) {
-  if (date == null || date.isEmpty) return '';
-  try {
-    final parsed = DateTime.tryParse(date);
-    if (parsed == null) return '';
-    final formattedDate = DateFormat('MMMM d, yyyy hh:mma').format(parsed); // Aug 13, 2025
-    // final formattedTime = DateFormat('h:mm a').format(parsed); // 11:28 PM
-    return formattedDate;
-  } catch (_) {
-    return '';
-  }
-}
-
-String formatAWSNewDateTime(String? date) {
-  if (date == null || date.isEmpty) return '';
-
-  final parsed = DateTime.tryParse(date);
-  if (parsed == null) return '';
-
-  return DateFormat('MMMM d, yyyy h:mm a').format(parsed);
-}
-
-
 String calculateAge(DateTime? birthDate) {
-  if (birthDate == null) {
-    return '';
-  }
+  if (birthDate == null) return '';
 
   DateTime today = DateTime.now();
   int age = today.year - birthDate.year;
@@ -666,69 +690,6 @@ Future<TimeOfDay?> callTimePicker(BuildContext context, {TimeOfDay? initialTime}
   }
 
   return selectedTime;
-}
-
-String normalizeSex(String? value) {
-  if (value == null) return '';
-
-  final v = value.trim().toUpperCase();
-
-  if (v == 'M') return 'MALE';
-  if (v == 'F') return 'FEMALE';
-
-  return value; // Return original (e.g., "MALE", "FEMALE", or other)
-}
-
-/// Show Google Map ------------------------------------------------------------
-Future<void> openGoogleMapsNavigation(double? lat, double? lng) async {
-  if (lat == null || lng == null) {
-    // Optionally log or show a snackbar/toast here
-    return;
-  }
-
-  final Uri url = Uri.parse(
-    'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng',
-  );
-
-  await launchUrl(url, mode: LaunchMode.externalApplication);
-}
-
-Future<void> openGoogleMaps(double? lat, double? lng) async {
-  if (lat == null || lng == null) {
-    // Optionally log or show a snackbar/toast here
-    return;
-  }
-
-  // Optional but recommended: validate coordinate range
-  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-    return;
-  }
-
-  final Uri url = Uri.parse(
-    'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
-  );
-
-  if (await canLaunchUrl(url)) {
-    await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    );
-  } else {
-    throw 'Could not open Google Maps';
-  }
-}
-
-Future<void> openGoogleMapsByName(String? place) async {
-  if (place == null || place.trim().isEmpty) {
-    // Optionally log or show a snackbar/toast here
-    return;
-  }
-
-  final Uri url = Uri.parse(
-    'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(place)}',
-  );
-
-  await launchUrl(url, mode: LaunchMode.externalApplication);
 }
 
 /// Show SnackBar --------------------------------------------------------------
