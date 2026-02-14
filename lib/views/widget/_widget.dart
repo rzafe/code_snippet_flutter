@@ -29,6 +29,5 @@ export 'load_image_widget.dart';
 export 'load_universal_widget.dart';
 export 'loading_circular_progress.dart';
 export 'loading_widget.dart';
-export 'pagination_widget.dart';
 export 'title_header_widget.dart';
 export 'verify_mobile_textfield.dart';
