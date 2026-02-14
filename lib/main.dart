@@ -142,7 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
               maxLines: 1,
               maxLength: 10,
               // fillColor: backgroundColor,
-              formLabel: '',
+              formLabel: 'dfdf',
+              formMargin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               onChanged: (phone) {
                 if (phone.length == 10) {
                   FocusScope.of(context).unfocus();

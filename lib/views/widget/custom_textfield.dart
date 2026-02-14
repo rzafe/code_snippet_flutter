@@ -58,6 +58,7 @@ class CustomTextField extends StatelessWidget {
   final Color? formTextColor;
   final FontWeight? formFontWeight;
   final bool? formIsRequired;
+  final EdgeInsets? formMargin;
 
   const CustomTextField({
     super.key,
@@ -110,6 +111,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.name({
@@ -163,6 +165,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.pin({
@@ -216,6 +219,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.email({
@@ -269,6 +273,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.mobile({
@@ -322,6 +327,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.number({
@@ -375,6 +381,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.decimal({
@@ -428,6 +435,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.date({
@@ -481,6 +489,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.time({
@@ -534,6 +543,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.search({
@@ -587,6 +597,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   const CustomTextField.password({
@@ -640,6 +651,7 @@ class CustomTextField extends StatelessWidget {
     this.formTextColor,
     this.formFontWeight,
     this.formIsRequired,
+    this.formMargin,
   });
 
   /// Determines input formatters based on textFieldType
@@ -726,6 +738,7 @@ class CustomTextField extends StatelessWidget {
                   textColor: formTextColor,
                   fontWeight: formFontWeight,
                   isRequired: formIsRequired ?? false,
+                  margin: formMargin ?? EdgeInsets.zero,
                 ),
               ],
               TextFormField(
