@@ -32,14 +32,14 @@ class DropDownButtonWidget extends StatelessWidget {
     required this.items,
     required this.value,
     this.hint,
-    this.hintSearch,
-    required this.searchController,
     this.hintFontSize,
     this.hintTextColor,
-    this.iconColor,
-    this.iconData,
-    this.isCustomFont = true,
+    required this.searchController,
+    this.hintSearch,
     this.isHideDropdownSearchData = false,
+    this.iconData,
+    this.iconColor,
+    this.isCustomFont = true,
     this.hasUnderline = false,
     this.buttonStylePadding,
     this.visible = true,
@@ -50,24 +50,28 @@ class DropDownButtonWidget extends StatelessWidget {
   final dynamic items;
   final String? value;
   final String? hint;
-  final String? hintSearch;
-  final TextEditingController searchController;
   final double? hintFontSize;
   final Color? hintTextColor;
-  final Color? iconColor;
-  final IconData? iconData;
-  final bool isCustomFont;
+
+  final TextEditingController searchController;
+  final String? hintSearch;
   final bool isHideDropdownSearchData;
+
+  final IconData? iconData;
+  final Color? iconColor;
+
+  final bool isCustomFont;
   final bool hasUnderline;
   final EdgeInsets? buttonStylePadding;
+
   final bool visible;
   final EdgeInsets margin;
   final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Visibility(
       visible: visible,
@@ -82,6 +86,7 @@ class DropDownButtonWidget extends StatelessWidget {
               fontSize: hintFontSize ?? 15,
               textColor: hintTextColor ?? Colors.grey,
               textAlign: TextAlign.start,
+              isCustomFont: isCustomFont,
             ),
             iconStyleData: IconStyleData(
               icon: Icon(
@@ -92,29 +97,22 @@ class DropDownButtonWidget extends StatelessWidget {
             buttonStyleData: ButtonStyleData(
               padding: buttonStylePadding ?? const EdgeInsets.fromLTRB(14, 0, 14, 0),
               width: width,
-              decoration: hasUnderline
-                  ? BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                      ),
-                    )
-                  : BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                    ),
+              decoration: BoxDecoration(
+                color: hasUnderline ? null : Colors.white,
+                border: hasUnderline
+                    ? const Border(
+                        bottom: BorderSide(color: Colors.grey, width: 1.0),
+                      )
+                    : Border.all(color: Colors.grey),
+                borderRadius: hasUnderline ? null : BorderRadius.circular(10),
+              ),
               elevation: 0,
             ),
             items: items,
             value: value,
             onChanged: onChanged,
             dropdownStyleData: DropdownStyleData(
-              maxHeight: height * .5,
+              maxHeight: height * 0.5,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
@@ -125,15 +123,13 @@ class DropDownButtonWidget extends StatelessWidget {
                 thumbVisibility: WidgetStateProperty.all(true),
               ),
             ),
-            dropdownSearchData: isHideDropdownSearchData == true ? null : DropdownSearchData(
+            dropdownSearchData: isHideDropdownSearchData ? null : DropdownSearchData(
               searchController: searchController,
               searchInnerWidgetHeight: 60,
               searchInnerWidget: Container(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-                height: height * .08,
+                // height: height * 0.08,
                 child: TextFormField(
-                  expands: true,
-                  maxLines: null,
                   controller: searchController,
                   decoration: InputDecoration(
                     isDense: true,
@@ -152,10 +148,10 @@ class DropDownButtonWidget extends StatelessWidget {
                 ),
               ),
               searchMatchFn: (item, searchValue) {
-                return item.value.toString().toUpperCase().contains(searchValue.toUpperCase());
+                final val = item.value ?? '';
+                return val.toUpperCase().contains(searchValue.toUpperCase());
               },
             ),
-            /// This to clear the search value when you close the menu
             onMenuStateChange: (isOpen) {
               if (!isOpen) {
                 searchController.clear();
@@ -174,40 +170,59 @@ class FormDefaultPicker extends StatefulWidget {
     super.key,
     required this.item,
     required this.value,
-    this.hint,
-    this.hintSearch,
     this.fontSize,
     this.textColor,
     this.fontWeight,
+    this.hint,
+    this.hintSearch,
+    this.isHideDropdownSearchData = false,
     this.iconData,
     this.iconColor,
     this.isEnabled = true,
-    this.isHideDropdownSearchData = false,
     this.isCustomFont = true,
     this.hasUnderline = false,
     this.buttonStylePadding,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onChanged,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   final List<String> item;
   final String? value;
-  final String? hint;
-  final String? hintSearch;
+
   final double? fontSize;
   final Color? textColor;
   final FontWeight? fontWeight;
+
+  final String? hint;
+  final String? hintSearch;
+  final bool isHideDropdownSearchData;
+
   final IconData? iconData;
   final Color? iconColor;
+
   final bool isEnabled;
-  final bool isHideDropdownSearchData;
   final bool isCustomFont;
   final bool hasUnderline;
   final EdgeInsets? buttonStylePadding;
+
   final bool visible;
   final EdgeInsets margin;
   final Function(String?)? onChanged;
+
+  /// Form Label
+  final String? formLabel;
+  final double? formFontSize;
+  final Color? formTextColor;
+  final FontWeight? formFontWeight;
+  final bool? formIsRequired;
 
   @override
   State<FormDefaultPicker> createState() => _FormDefaultPickerState();
@@ -228,31 +243,45 @@ class _FormDefaultPickerState extends State<FormDefaultPicker> {
       visible: widget.visible,
       child: Padding(
         padding: widget.margin,
-        child: IgnorePointer(
-          ignoring: widget.isEnabled ? false : true,
-          child: DropDownButtonWidget(
-            items: widget.item
-                .map((String item) => DropdownMenuItem<String>(
-              value: item,
-              child: CustomText(
-                title: item,
-                fontSize: widget.fontSize ?? 15,
-                textColor: widget.textColor ?? Colors.black,
-                fontWeight: widget.fontWeight ?? FontWeight.normal,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (widget.formLabel?.isNotEmpty == true) ...[
+              FormRequiredLabel(
+                title: widget.formLabel ?? '',
+                fontSize: widget.formFontSize ?? 12,
+                textColor: widget.formTextColor,
+                fontWeight: widget.formFontWeight,
+                isRequired: widget.formIsRequired ?? false,
               ),
-            )).toList(),
-            value: widget.item.contains(widget.value) ? widget.value : null,
-            hint: widget.hint,
-            hintSearch: widget.hintSearch,
-            iconData: widget.iconData,
-            iconColor: widget.iconColor,
-            searchController: _controller,
-            isHideDropdownSearchData: widget.isHideDropdownSearchData,
-            isCustomFont: widget.isCustomFont,
-            hasUnderline: widget.hasUnderline,
-            buttonStylePadding: widget.buttonStylePadding,
-            onChanged: widget.onChanged,
-          ),
+            ],
+            IgnorePointer(
+              ignoring: widget.isEnabled ? false : true,
+              child: DropDownButtonWidget(
+                items: widget.item
+                    .map((String item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: CustomText(
+                    title: item,
+                    fontSize: widget.fontSize ?? 15,
+                    textColor: widget.textColor ?? Colors.black,
+                    fontWeight: widget.fontWeight ?? FontWeight.normal,
+                  ),
+                )).toList(),
+                value: widget.item.contains(widget.value) ? widget.value : null,
+                hint: widget.hint,
+                searchController: _controller,
+                hintSearch: widget.hintSearch,
+                isHideDropdownSearchData: widget.isHideDropdownSearchData,
+                iconData: widget.iconData,
+                iconColor: widget.iconColor,
+                isCustomFont: widget.isCustomFont,
+                hasUnderline: widget.hasUnderline,
+                buttonStylePadding: widget.buttonStylePadding,
+                onChanged: widget.onChanged,
+              ),
+            ),
+          ],
         ),
       ),
     );
