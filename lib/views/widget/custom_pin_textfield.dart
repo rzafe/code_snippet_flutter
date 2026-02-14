@@ -1,29 +1,37 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../utilities/_utils.dart';
-
 class CustomPinTextField extends StatelessWidget {
   final TextEditingController controller;
+
   final double? width;
-  final double? borderRadius;
-  final double? fieldWidth;
-  final double? fieldHeight;
-  final double? fontSize;
+  final double borderRadius;
+  final double fieldWidth;
+  final double fieldHeight;
+  final double fontSize;
+
   final int length;
+
   final Color? textColor;
   final Color? fillColor;
-  final FontWeight? fontWeight;
+  final Color? cursorColor;
+  final Color? borderColor;
+  final double borderWidth;
+
+  final FontWeight fontWeight;
   final FontStyle? fontStyle;
   final String? fontFamily;
+
   final bool obscureText;
+  final String obscuringCharacter;
+
   final bool readOnly;
   final bool isCustomFont;
   final bool visible;
   final EdgeInsets margin;
+
   final Function(String)? onCompleted;
   final Function(String)? onChanged;
 
@@ -34,14 +42,18 @@ class CustomPinTextField extends StatelessWidget {
     this.borderRadius = 15,
     this.fieldWidth = 50,
     this.fieldHeight = 50,
-    this.fontSize,
+    this.fontSize = 14,
     this.length = 4,
     this.textColor,
     this.fillColor,
-    this.fontWeight,
+    this.cursorColor,
+    this.borderColor,
+    this.borderWidth = 1.2,
+    this.fontWeight = FontWeight.normal,
     this.fontStyle,
     this.fontFamily,
     this.obscureText = true,
+    this.obscuringCharacter = "●",
     this.readOnly = false,
     this.isCustomFont = true,
     this.visible = true,
@@ -50,6 +62,7 @@ class CustomPinTextField extends StatelessWidget {
     this.onChanged,
   });
 
+  /// OTP constructor (6 digits, not obscured by default)
   const CustomPinTextField.otp({
     super.key,
     required this.controller,
@@ -57,14 +70,18 @@ class CustomPinTextField extends StatelessWidget {
     this.borderRadius = 15,
     this.fieldWidth = 45,
     this.fieldHeight = 45,
-    this.fontSize,
+    this.fontSize = 14,
     this.length = 6,
     this.textColor,
     this.fillColor,
-    this.fontWeight,
+    this.cursorColor,
+    this.borderColor,
+    this.borderWidth = 1.2,
+    this.fontWeight = FontWeight.normal,
     this.fontStyle,
     this.fontFamily,
-    this.obscureText = true,
+    this.obscureText = false,
+    this.obscuringCharacter = "●",
     this.readOnly = false,
     this.isCustomFont = true,
     this.visible = true,
@@ -75,54 +92,53 @@ class CustomPinTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: visible,
-      child: Padding(
-        padding: margin,
-        child: SizedBox(
-          width: width,
-          child: PinCodeTextField(
-            autoDisposeControllers: false,
-            controller: controller,
-            appContext: context,
-            obscureText: obscureText,
-            keyboardType: TextInputType.number,
-            length: length,
-            readOnly: readOnly,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-            ],
-            enableActiveFill: true,
-            cursorColor: primaryColor,
-            textStyle: isCustomFont
-                ? GoogleFonts.poppins(
-                    color: textColor ?? primaryColor,
-                    fontSize: fontSize ?? 14,
-                    fontWeight: fontWeight ?? FontWeight.normal,
-                    fontStyle: fontStyle,
-                  )
-                : TextStyle(
-                    color: textColor ?? primaryColor,
-                    fontSize: fontSize ?? 14,
-                    fontWeight: fontWeight ?? FontWeight.normal,
-                    fontStyle: fontStyle,
-                    fontFamily: fontFamily,
-                  ),
-            pinTheme: PinTheme(
-              shape: PinCodeFieldShape.box,
-              borderRadius: BorderRadius.circular(borderRadius ?? 15),
-              fieldWidth: fieldWidth,
-              fieldHeight: fieldHeight,
-              activeColor: Colors.transparent,
-              inactiveColor: Colors.transparent,
-              selectedColor: Colors.transparent,
-              activeFillColor: fillColor ?? Colors.white,
-              inactiveFillColor: fillColor ?? Colors.white,
-              selectedFillColor: fillColor ?? Colors.white,
-            ),
-            onCompleted: onCompleted,
-            onChanged: onChanged,
+    if (!visible) return const SizedBox.shrink();
+
+    final theme = Theme.of(context);
+
+    final baseStyle = TextStyle(
+      color: textColor ?? theme.primaryColor,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+    );
+
+    return Padding(
+      padding: margin,
+      child: SizedBox(
+        width: width,
+        child: PinCodeTextField(
+          appContext: context,
+          controller: controller,
+          autoDisposeControllers: false,
+          length: length,
+          readOnly: readOnly,
+          obscureText: obscureText,
+          obscuringCharacter: obscuringCharacter,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          enableActiveFill: true,
+          cursorColor: cursorColor ?? theme.primaryColor,
+          textStyle: isCustomFont
+              ? GoogleFonts.poppins(textStyle: baseStyle)
+              : baseStyle.copyWith(fontFamily: fontFamily),
+          pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(borderRadius),
+            fieldWidth: fieldWidth,
+            fieldHeight: fieldHeight,
+            borderWidth: borderWidth,
+            activeColor: borderColor ?? theme.primaryColor,
+            inactiveColor: borderColor ?? Colors.grey.shade400,
+            selectedColor: borderColor ?? theme.primaryColor,
+            activeFillColor: fillColor ?? Colors.white,
+            inactiveFillColor: fillColor ?? Colors.white,
+            selectedFillColor: fillColor ?? Colors.white,
           ),
+          onCompleted: onCompleted,
+          onChanged: onChanged ?? (_) {},
         ),
       ),
     );

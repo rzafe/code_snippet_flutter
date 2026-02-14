@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '_widget.dart';
@@ -12,60 +11,81 @@ class CustomItemInfo extends StatelessWidget {
     this.titleFontSize,
     this.titleColor,
     this.titleFontWeight,
+    this.titleMaxLines,
     this.infoFontSize,
     this.infoColor,
     this.infoFontWeight,
+    this.infoMaxLines,
     this.visible = true,
     this.margin = EdgeInsets.zero,
+    this.spacing = 8,
+    this.showColon = false,
   });
 
   final String title;
   final String info;
+
   final double? titleWidth;
   final double? titleFontSize;
   final Color? titleColor;
   final FontWeight? titleFontWeight;
+  final int? titleMaxLines;
+
   final double? infoFontSize;
   final Color? infoColor;
   final FontWeight? infoFontWeight;
+  final int? infoMaxLines;
+
   final bool visible;
   final EdgeInsets margin;
+  final double spacing;
+  final bool showColon;
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: visible,
-      child: Padding(
-        padding: margin,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
+    if (!visible) return const SizedBox.shrink();
+
+    return Padding(
+      padding: margin,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (titleWidth != null)
             SizedBox(
               width: titleWidth,
               child: CustomText(
-                title: title,
+                title: showColon ? '$title:' : title,
                 fontSize: titleFontSize ?? 13,
-                textColor: titleColor ?? Colors.grey,
+                textColor: titleColor ?? Colors.black,
                 fontWeight: titleFontWeight ?? FontWeight.normal,
+                maxLines: titleMaxLines,
               ),
-            ),
+            )
+          else
             CustomText(
-              title: ':',
+              title: showColon ? '$title:' : title,
               fontSize: titleFontSize ?? 13,
-              textColor: titleColor ?? Colors.grey,
+              textColor: titleColor ?? Colors.black,
               fontWeight: titleFontWeight ?? FontWeight.normal,
+              maxLines: titleMaxLines,
             ),
-            Expanded(
+
+          SizedBox(width: spacing),
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
               child: CustomText(
                 title: info,
                 fontSize: infoFontSize ?? 13,
                 textColor: infoColor ?? Colors.black,
                 fontWeight: infoFontWeight ?? FontWeight.normal,
+                maxLines: infoMaxLines,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
