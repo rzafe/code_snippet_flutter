@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utilities/_utils.dart';
+import '_widget.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -51,6 +52,13 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final Function()? onTap;
 
+  /// Form Label
+  final String? formLabel;
+  final double? formFontSize;
+  final Color? formTextColor;
+  final FontWeight? formFontWeight;
+  final bool? formIsRequired;
+
   const CustomTextField({
     super.key,
     required this.controller,
@@ -95,6 +103,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.name({
@@ -141,6 +156,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.pin({
@@ -187,6 +209,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.email({
@@ -233,6 +262,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.mobile({
@@ -279,6 +315,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.number({
@@ -325,6 +368,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.decimal({
@@ -371,6 +421,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.date({
@@ -417,6 +474,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.time({
@@ -463,6 +527,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.search({
@@ -509,6 +580,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   const CustomTextField.password({
@@ -555,6 +633,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onTap,
+
+    /// Form Label
+    this.formLabel,
+    this.formFontSize,
+    this.formTextColor,
+    this.formFontWeight,
+    this.formIsRequired,
   });
 
   /// Determines input formatters based on textFieldType
@@ -631,50 +716,64 @@ class CustomTextField extends StatelessWidget {
         child: SizedBox(
           width: widthField,
           height: heightField,
-          child: TextFormField(
-            controller: controller,
-            focusNode: focusNode,
-            enableInteractiveSelection: enableInteractiveSelection ?? false,
-            readOnly: readOnly ?? false,
-            enabled: enabled,
-            obscureText: obscureText ?? false,
-            keyboardType: keyboardType,
-            textCapitalization: textCapitalization,
-            inputFormatters: _getInputFormatters(),
-            style: textStyle,
-            maxLength: maxLength,
-            maxLines: maxLines,
-            decoration: InputDecoration(
-              contentPadding: contentPadding,
-              labelText: labelText,
-              labelStyle: labelStyle,
-              suffixIconConstraints: const BoxConstraints(
-                minWidth: 24,
-                minHeight: 24,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (formLabel?.isNotEmpty == true) ...[
+                FormRequiredLabel(
+                  title: formLabel ?? '',
+                  fontSize: formFontSize ?? 12,
+                  textColor: formTextColor,
+                  fontWeight: formFontWeight,
+                  isRequired: formIsRequired ?? false,
+                ),
+              ],
+              TextFormField(
+                controller: controller,
+                focusNode: focusNode,
+                enableInteractiveSelection: enableInteractiveSelection ?? false,
+                readOnly: readOnly ?? false,
+                enabled: enabled,
+                obscureText: obscureText ?? false,
+                keyboardType: keyboardType,
+                textCapitalization: textCapitalization,
+                inputFormatters: _getInputFormatters(),
+                style: textStyle,
+                maxLength: maxLength,
+                maxLines: maxLines,
+                decoration: InputDecoration(
+                  contentPadding: contentPadding,
+                  labelText: labelText,
+                  labelStyle: labelStyle,
+                  suffixIconConstraints: const BoxConstraints(
+                    minWidth: 24,
+                    minHeight: 24,
+                  ),
+                  prefixIconConstraints: const BoxConstraints(
+                    minWidth: 24,
+                    minHeight: 24,
+                  ),
+                  floatingLabelBehavior: floatingLabelBehavior ?? FloatingLabelBehavior.never,
+                  alignLabelWithHint: alignLabelWithHint ?? true,
+                  hintText: hintText,
+                  hintStyle: hintStyle,
+                  hintMaxLines: hintMaxLines,
+                  counterText: '',
+                  errorMaxLines: errorMaxLines,
+                  fillColor: fillColor ?? Colors.white,
+                  filled: filled ?? true,
+                  prefixIcon: prefixIcon,
+                  suffixIcon: suffixIcon,
+                  border: _buildBorder(color: enabledBorderColor, width: 0.5),
+                  enabledBorder: _buildBorder(color: enabledBorderColor, width: 0.5),
+                  focusedBorder: _buildBorder(color: focusedBorderColor, width: 1.5),
+                ),
+                onFieldSubmitted: onSubmitted,
+                validator: validator,
+                onChanged: onChanged,
+                onTap: onTap,
               ),
-              prefixIconConstraints: const BoxConstraints(
-                minWidth: 24,
-                minHeight: 24,
-              ),
-              floatingLabelBehavior: floatingLabelBehavior ?? FloatingLabelBehavior.never,
-              alignLabelWithHint: alignLabelWithHint ?? true,
-              hintText: hintText,
-              hintStyle: hintStyle,
-              hintMaxLines: hintMaxLines,
-              counterText: '',
-              errorMaxLines: errorMaxLines,
-              fillColor: fillColor ?? Colors.white,
-              filled: filled ?? true,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              border: _buildBorder(color: enabledBorderColor, width: 0.5),
-              enabledBorder: _buildBorder(color: enabledBorderColor, width: 0.5),
-              focusedBorder: _buildBorder(color: focusedBorderColor, width: 1.5),
-            ),
-            onFieldSubmitted: onSubmitted,
-            validator: validator,
-            onChanged: onChanged,
-            onTap: onTap,
+            ],
           ),
         ),
       ),

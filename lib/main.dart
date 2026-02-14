@@ -133,33 +133,34 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             Gap(20),
-            // CustomTextField.date(
-            //   controller: controller,
-            //   hintText: 'Mobile Number',
-            //   borderRadius: 25,
-            //   // readOnly: true,
-            //   // enabled: false,
-            //   maxLines: 1,
-            //   maxLength: 10,
-            //   // fillColor: backgroundColor,
-            //   onChanged: (phone) {
-            //     if (phone.length == 10) {
-            //       FocusScope.of(context).unfocus();
-            //     }
-            //   },
-            //   suffixIcon: IconTextFieldWidget(
-            //     iconData: Icons.clear,
-            //     margin: EdgeInsets.only(right: 10),
-            //     // onTap: onTapClear,
-            //   ),
-            //   onTap: () async {
-            //     DateTime? dateTime = await callCalendar(context);
-            //     String date = dateTime != null ? formatDate(dateTime) : '';
-            //     setState(() {
-            //       controller.text = date;
-            //     });
-            //   },
-            // ),
+            CustomTextField.date(
+              controller: controller,
+              hintText: 'Mobile Number',
+              borderRadius: 25,
+              // readOnly: true,
+              // enabled: false,
+              maxLines: 1,
+              maxLength: 10,
+              // fillColor: backgroundColor,
+              formLabel: '',
+              onChanged: (phone) {
+                if (phone.length == 10) {
+                  FocusScope.of(context).unfocus();
+                }
+              },
+              suffixIcon: IconTextFieldWidget(
+                iconData: Icons.clear,
+                margin: EdgeInsets.only(right: 10),
+                // onTap: onTapClear,
+              ),
+              onTap: () async {
+                DateTime? dateTime = await callCalendar(context);
+                String date = dateTime != null ? formatDate(dateTime) : '';
+                setState(() {
+                  controller.text = date;
+                });
+              },
+            ),
             // Text(formatNumber('10000.545')),
             // Text(
             //   '$_counter',
