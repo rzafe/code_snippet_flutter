@@ -406,6 +406,7 @@ String normalizeSex(String? value) {
   return value; // Return original (e.g., "MALE", "FEMALE", or other)
 }
 
+/// Maps -----------------------------------------------------------------------
 Future<String> getAddressFromLatLng(double lat, double lng) async {
   try {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
@@ -419,7 +420,6 @@ Future<String> getAddressFromLatLng(double lat, double lng) async {
   }
 }
 
-/// Show Google Map ------------------------------------------------------------
 Future<void> openGoogleMapsNavigation(double? lat, double? lng) async {
   if (lat == null || lng == null) {
     // Optionally log or show a snackbar/toast here
@@ -430,7 +430,11 @@ Future<void> openGoogleMapsNavigation(double? lat, double? lng) async {
     'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng',
   );
 
-  await launchUrl(url, mode: LaunchMode.externalApplication);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not open Google Maps';
+  }
 }
 
 Future<void> openGoogleMaps(double? lat, double? lng) async {
@@ -468,7 +472,11 @@ Future<void> openGoogleMapsByName(String? place) async {
     'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(place)}',
   );
 
-  await launchUrl(url, mode: LaunchMode.externalApplication);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not open Google Maps';
+  }
 }
 
 /// Secure Storage -------------------------------------------------------------
@@ -493,7 +501,18 @@ String formatNumber(String? number) {
 
   try {
     final parsed = double.parse(number);
-    return NumberFormat('#,##0').format(parsed);
+    return NumberFormat('#,##0').format(parsed); //e.g. 1,000
+  } catch (e) {
+    return ''; // or handle the error accordingly
+  }
+}
+
+String formatNumberWithDecimal(String? number) {
+  if (number == null || number.isEmpty) return '';
+
+  try {
+    final parsed = double.parse(number);
+    return NumberFormat('#,##0.##').format(parsed); //e.g. 1,000.00
   } catch (e) {
     return ''; // or handle the error accordingly
   }

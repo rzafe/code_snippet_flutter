@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: .center,
           children: [
-            // Text(formatTime24Hours('08:35:33')),
+            Text(formatNumber('10000.545')),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
