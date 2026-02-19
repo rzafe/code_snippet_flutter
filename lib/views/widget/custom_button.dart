@@ -11,6 +11,8 @@ class CustomButton extends StatelessWidget {
   final FontWeight fontWeight;
   final FontStyle? fontStyle;
   final String? fontFamily;
+  final TextDecoration? decoration;
+  final Color? decorationColor;
 
   final double? buttonWidth;
   final double? buttonHeight;
@@ -20,6 +22,8 @@ class CustomButton extends StatelessWidget {
   final double? borderWidth;
   final double? elevation;
   final Size? minimumSize;
+  final MaterialTapTargetSize? tapTargetSize;
+  final VisualDensity? visualDensity;
   final EdgeInsetsGeometry? paddingButton;
 
   final bool isCustomFont;
@@ -39,6 +43,8 @@ class CustomButton extends StatelessWidget {
     this.fontWeight = FontWeight.bold,
     this.fontStyle,
     this.fontFamily,
+    this.decoration,
+    this.decorationColor,
 
     this.buttonWidth,
     this.buttonHeight,
@@ -48,6 +54,8 @@ class CustomButton extends StatelessWidget {
     this.borderWidth,
     this.elevation,
     this.minimumSize,
+    this.tapTargetSize,
+    this.visualDensity,
     this.paddingButton,
 
     this.isCustomFont = true,
@@ -74,6 +82,8 @@ class CustomButton extends StatelessWidget {
               backgroundColor: buttonColor,
               elevation: elevation,
               minimumSize: minimumSize,
+              tapTargetSize: tapTargetSize ?? MaterialTapTargetSize.shrinkWrap,
+              visualDensity: visualDensity ?? VisualDensity.compact,
               side: BorderSide(
                 color: borderColor ?? Colors.transparent,
                 width: borderWidth ?? 1,
@@ -99,6 +109,8 @@ class CustomButton extends StatelessWidget {
                     fontStyle: fontStyle,
                     fontFamily: fontFamily,
                     textAlign: TextAlign.center,
+                    decoration: decoration,
+                    decorationColor: decorationColor,
                     maxLines: 1,
                     isCustomFont: isCustomFont,
                   ),
