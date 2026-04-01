@@ -744,7 +744,7 @@ class CustomTextField extends StatelessWidget {
               TextFormField(
                 controller: controller,
                 focusNode: focusNode,
-                enableInteractiveSelection: enableInteractiveSelection ?? false,
+                enableInteractiveSelection: enableInteractiveSelection ?? true,
                 readOnly: readOnly ?? false,
                 enabled: enabled,
                 obscureText: obscureText ?? false,
