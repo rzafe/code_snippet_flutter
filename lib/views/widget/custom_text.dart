@@ -10,6 +10,7 @@ class CustomText extends StatelessWidget {
   final String? fontFamily;
   final TextDecoration? decoration;
   final Color? decorationColor;
+  final double? letterSpacing;
   final int? maxLines;
   final TextOverflow? overflow;
   final TextAlign? textAlign;
@@ -34,6 +35,7 @@ class CustomText extends StatelessWidget {
     this.fontFamily,
     this.decoration,
     this.decorationColor,
+    this.letterSpacing,
     this.maxLines,
     this.overflow,
     this.textAlign,
@@ -79,6 +81,7 @@ class CustomText extends StatelessWidget {
                           fontStyle: fontStyle,
                           decoration: decoration,
                           decorationColor: decorationColor,
+                          letterSpacing: letterSpacing,
                         )
                       : TextStyle(
                           color: textColor ?? Colors.black,
@@ -88,6 +91,7 @@ class CustomText extends StatelessWidget {
                           fontFamily: fontFamily,
                           decoration: decoration,
                           decorationColor: decorationColor,
+                          letterSpacing: letterSpacing,
                         ),
                   maxLines: maxLines,
                   overflow: overflow,
