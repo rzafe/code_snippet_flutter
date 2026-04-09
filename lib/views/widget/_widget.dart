@@ -19,6 +19,7 @@ export 'custom_text.dart';
 export 'custom_text_resize.dart';
 export 'custom_textfield.dart';
 export 'custom_upload_file.dart';
+export 'custom_vertical_divider.dart';
 export 'form_date_picker_ios.dart';
 export 'form_details.dart';
 export 'form_dropdown_button.dart';
