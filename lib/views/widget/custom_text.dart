@@ -10,6 +10,7 @@ class CustomText extends StatelessWidget {
   final String? fontFamily;
   final TextDecoration? decoration;
   final Color? decorationColor;
+  final double? wordSpacing;
   final double? letterSpacing;
   final int? maxLines;
   final TextOverflow? overflow;
@@ -18,12 +19,6 @@ class CustomText extends StatelessWidget {
   final bool visible;
   final EdgeInsets margin;
   final Function()? onTap;
-
-  // 🔹 New icon properties
-  final IconData? icon;
-  final Color? iconColor;
-  final double? iconSize;
-  final double iconSpacing;
 
   const CustomText({
     super.key,
@@ -35,6 +30,7 @@ class CustomText extends StatelessWidget {
     this.fontFamily,
     this.decoration,
     this.decorationColor,
+    this.wordSpacing,
     this.letterSpacing,
     this.maxLines,
     this.overflow,
@@ -43,10 +39,6 @@ class CustomText extends StatelessWidget {
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onTap,
-    this.icon,
-    this.iconColor,
-    this.iconSize,
-    this.iconSpacing = 6.0,
   });
 
   @override
@@ -57,48 +49,33 @@ class CustomText extends StatelessWidget {
         padding: margin,
         child: GestureDetector(
           onTap: onTap,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (icon != null)
-                Padding(
-                  padding: EdgeInsets.only(right: iconSpacing),
-                  child: Icon(
-                    icon,
-                    size: iconSize ?? (fontSize != null ? fontSize! + 2 : 16),
-                    color: iconColor ?? textColor ?? Colors.black,
+          child: Text(
+            title,
+            style: isCustomFont
+                ? GoogleFonts.poppins(
+                    color: textColor ?? Colors.black,
+                    fontSize: fontSize ?? 13,
+                    fontWeight: fontWeight ?? FontWeight.normal,
+                    fontStyle: fontStyle,
+                    decoration: decoration,
+                    decorationColor: decorationColor,
+                    letterSpacing: letterSpacing,
+                    wordSpacing: wordSpacing,
+                  )
+                : TextStyle(
+                    color: textColor ?? Colors.black,
+                    fontSize: fontSize ?? 13,
+                    fontWeight: fontWeight ?? FontWeight.normal,
+                    fontStyle: fontStyle,
+                    fontFamily: fontFamily,
+                    decoration: decoration,
+                    decorationColor: decorationColor,
+                    letterSpacing: letterSpacing,
+                    wordSpacing: wordSpacing,
                   ),
-                ),
-              Flexible(
-                child: Text(
-                  title,
-                  style: isCustomFont
-                      ? GoogleFonts.poppins(
-                          color: textColor ?? Colors.black,
-                          fontSize: fontSize ?? 13,
-                          fontWeight: fontWeight ?? FontWeight.normal,
-                          fontStyle: fontStyle,
-                          decoration: decoration,
-                          decorationColor: decorationColor,
-                          letterSpacing: letterSpacing,
-                        )
-                      : TextStyle(
-                          color: textColor ?? Colors.black,
-                          fontSize: fontSize ?? 13,
-                          fontWeight: fontWeight ?? FontWeight.normal,
-                          fontStyle: fontStyle,
-                          fontFamily: fontFamily,
-                          decoration: decoration,
-                          decorationColor: decorationColor,
-                          letterSpacing: letterSpacing,
-                        ),
-                  maxLines: maxLines,
-                  overflow: overflow,
-                  textAlign: textAlign,
-                ),
-              ),
-            ],
+            maxLines: maxLines,
+            overflow: overflow,
+            textAlign: textAlign,
           ),
         ),
       ),
