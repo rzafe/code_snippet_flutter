@@ -1,4 +1,4 @@
-export 'bg_widget.dart';
+export 'background_widget.dart';
 export 'camera_2x2.dart';
 export 'custom_animated_card.dart';
 export 'custom_broken_line.dart';

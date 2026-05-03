@@ -11,6 +11,7 @@ PreferredSizeWidget appBarWidget(BuildContext context, {
   Color? textColor,
   FontWeight? fontWeight,
   int? maxLines,
+  Widget? titleWidget,
   SystemUiOverlayStyle? systemOverlayStyle,
   Color? backgroundColor,
   bool? isCenterTitle,
@@ -25,7 +26,7 @@ PreferredSizeWidget appBarWidget(BuildContext context, {
   Function()? onTap,
 }) {
   return AppBar(
-    title: CustomText(
+    title: titleWidget ?? CustomText(
       title: title ?? '',
       fontSize: fontSize ?? 20,
       textColor: textColor ?? Colors.black,

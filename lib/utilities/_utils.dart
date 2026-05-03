@@ -1,5 +1,6 @@
 export 'assets.dart';
 export 'colors.dart';
+export 'extension.dart';
 export 'global.dart';
 export 'helpers.dart';
 export 'import.dart';
