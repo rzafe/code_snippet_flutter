@@ -7,11 +7,9 @@ import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:path/path.dart';
@@ -23,12 +21,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// import '../bloc/common/_common.dart';
-// import '../data/model/_model.dart';
-// import '../data/provider/api_repository/_api.dart';
 import '../views/widget/_widget.dart';
-// import '../views/widget/bottom_sheet/_sheet.dart';
-// import '../views/widget/dialog/_dialog.dart';
 import '_utils.dart';
 
 void printDebug(Object? message, {String? title}) {
@@ -714,8 +707,10 @@ Future<TimeOfDay?> callTimePicker(BuildContext context, {TimeOfDay? initialTime}
 /// Show SnackBar --------------------------------------------------------------
 void showSnackBar(BuildContext context, {
   required String message,
-  required Color backgroundColor,
+  Color? backgroundColor,
 }) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
   final SnackBar snackBar = SnackBar(
     content: CustomText(
       text: message,
@@ -729,6 +724,8 @@ void showSnackBar(BuildContext context, {
 }
 
 void showSnackBarNormal(BuildContext context, {required String message}) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
   final SnackBar snackBar = SnackBar(
     content: CustomText(
       text: message,
@@ -742,6 +739,38 @@ void showSnackBarNormal(BuildContext context, {required String message}) {
 }
 
 void showSnackBarError(BuildContext context, {required String message}) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+  final SnackBar snackBar = SnackBar(
+    content: CustomText(
+      text: message,
+      color: Colors.white,
+    ),
+    duration: const Duration(seconds: 3),
+    action: null,
+    backgroundColor: Colors.orange,
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void showSnackBarInfo(BuildContext context, {required String message}) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+  final SnackBar snackBar = SnackBar(
+    content: CustomText(
+      text: message,
+      color: Colors.white,
+    ),
+    duration: const Duration(seconds: 3),
+    action: null,
+    backgroundColor: Colors.blue,
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void showSnackBarWarning(BuildContext context, {required String message}) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
   final SnackBar snackBar = SnackBar(
     content: CustomText(
       text: message,
@@ -752,6 +781,127 @@ void showSnackBarError(BuildContext context, {required String message}) {
     backgroundColor: Colors.red,
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+enum SnackBarType {
+  success,
+  error,
+  warning,
+  info,
+}
+
+void showSnackBarDefault(
+  BuildContext context, {
+    required String message,
+
+    // Widgets
+    Widget? prefixIcon,
+    Widget? suffixWidget,
+
+    // Colors
+    Color? backgroundColor,
+    Color textColor = Colors.white,
+
+    // Layout
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 12,
+    ),
+
+    double borderRadius = 12,
+    double elevation = 6,
+    double? width,
+
+    // Behavior
+    SnackBarBehavior behavior = SnackBarBehavior.floating,
+    DismissDirection dismissDirection = DismissDirection.horizontal,
+    Duration duration = const Duration(seconds: 3),
+
+    // Preset
+    SnackBarType? type,
+
+    // Action
+    SnackBarAction? action,
+
+    // Callback
+    VoidCallback? onVisible,
+  })
+{
+  final messenger = ScaffoldMessenger.of(context);
+
+  messenger.removeCurrentSnackBar();
+
+  // Auto background color
+  final Color resolvedBackgroundColor = backgroundColor ??
+      switch (type) {
+        SnackBarType.success => Colors.green,
+        SnackBarType.error => Colors.red,
+        SnackBarType.warning => Colors.orange,
+        SnackBarType.info => Colors.blue,
+        null => Colors.black87,
+      };
+
+  // Margin only works for floating snackbar
+  final EdgeInsetsGeometry? resolvedMargin =
+  behavior == SnackBarBehavior.floating
+      ? (margin ?? const EdgeInsets.all(16))
+      : null;
+
+  // Fixed snackbar should not have border radius
+  final double resolvedBorderRadius =
+  behavior == SnackBarBehavior.fixed
+      ? 0
+      : borderRadius;
+
+  final snackBar = SnackBar(
+    content: Row(
+      children: [
+        if (prefixIcon != null) ...[
+          prefixIcon,
+          const SizedBox(width: 10),
+        ],
+
+        Expanded(
+          child: CustomText(
+            text: message,
+            color: textColor,
+            overflow: TextOverflow.fade,
+          ),
+        ),
+
+        if (suffixWidget != null) ...[
+          const SizedBox(width: 10),
+          suffixWidget,
+        ],
+      ],
+    ),
+
+    // Appearance
+    backgroundColor: resolvedBackgroundColor,
+    padding: padding,
+    margin: resolvedMargin,
+    width: width,
+    elevation: elevation,
+
+    // Shape
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        resolvedBorderRadius,
+      ),
+    ),
+
+    // Behavior
+    behavior: behavior,
+    dismissDirection: dismissDirection,
+    duration: duration,
+
+    // Extras
+    action: action,
+    onVisible: onVisible,
+  );
+
+  messenger.showSnackBar(snackBar);
 }
 
 /// Show Toast -----------------------------------------------------------------
