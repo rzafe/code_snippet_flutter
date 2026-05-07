@@ -10,6 +10,7 @@ export 'custom_checkbox_list.dart';
 export 'custom_divider.dart';
 export 'custom_item_info.dart';
 export 'custom_list_upload_file.dart';
+export 'custom_lottie.dart';
 export 'custom_pin_textfield.dart';
 export 'custom_radio_button.dart';
 export 'custom_radio_button_group.dart';
