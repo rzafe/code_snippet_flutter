@@ -176,7 +176,7 @@ class _UploadRowState extends State<UploadRow> {
           ),
           SizedBox(width: 10,),
           CustomButton(
-            title: widget.buttonText,
+            text: widget.buttonText,
             buttonHeight: 30,
             textColor: Colors.white,
             fontSize: 12,

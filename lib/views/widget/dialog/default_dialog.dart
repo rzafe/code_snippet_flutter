@@ -81,14 +81,14 @@ class DefaultDialog extends StatelessWidget {
                             ),
                             const SizedBox(height: 20,),
                             CustomButton(
-                              title: textButton ?? 'OK',
+                              text: textButton ?? 'OK',
                               buttonWidth: double.infinity,
                               onTap: onTap ?? () {
                                 Navigator.pop(context);
                               },
                             ),
                             CustomButton(
-                              title: cancelTextButton ?? 'CANCEL',
+                              text: cancelTextButton ?? 'CANCEL',
                               buttonWidth: double.infinity,
                               buttonColor: Colors.white,
                               textColor: primaryColor,

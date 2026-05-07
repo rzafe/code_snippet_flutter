@@ -5,7 +5,7 @@ import '../../utilities/_utils.dart';
 import '_widget.dart';
 
 class CustomButton extends StatelessWidget {
-  final String title;
+  final String text;
   final Color textColor;
   final double fontSize;
   final FontWeight fontWeight;
@@ -25,19 +25,18 @@ class CustomButton extends StatelessWidget {
   final MaterialTapTargetSize? tapTargetSize;
   final VisualDensity? visualDensity;
   final EdgeInsetsGeometry? paddingButton;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final double? spacing;
 
   final bool isCustomFont;
   final bool visible;
   final EdgeInsets margin;
   final Function()? onTap;
 
-  /// NEW: prefix & suffix icons (default = null)
-  final Widget? prefixIcon;
-  final Widget? suffixIcon;
-
   const CustomButton({
     super.key,
-    required this.title,
+    required this.text,
     this.textColor = Colors.white,
     this.fontSize = 15,
     this.fontWeight = FontWeight.bold,
@@ -57,13 +56,14 @@ class CustomButton extends StatelessWidget {
     this.tapTargetSize,
     this.visualDensity,
     this.paddingButton,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.spacing,
 
     this.isCustomFont = true,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.onTap,
-    this.prefixIcon,
-    this.suffixIcon,
   });
 
   @override
@@ -98,11 +98,11 @@ class CustomButton extends StatelessWidget {
               children: [
                 if (prefixIcon != null) ...[
                   prefixIcon!,
-                  const SizedBox(width: 6),
+                  SizedBox(width: spacing ?? 6),
                 ],
                 Flexible(
                   child: CustomText(
-                    text: title,
+                    text: text,
                     fontSize: fontSize,
                     color: textColor,
                     fontWeight: fontWeight,
@@ -116,7 +116,7 @@ class CustomButton extends StatelessWidget {
                   ),
                 ),
                 if (suffixIcon != null) ...[
-                  const SizedBox(width: 6),
+                  SizedBox(width: spacing ?? 6),
                   suffixIcon!,
                 ],
               ],

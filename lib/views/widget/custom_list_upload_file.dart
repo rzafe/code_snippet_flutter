@@ -148,7 +148,7 @@ class FileUploadList extends FormField<Map<String, String>> {
                           ),
                         ),
                         CustomButton(
-                          title: 'Upload',
+                          text: 'Upload',
                           buttonColor: primaryColor,
                           borderRadius: 30,
                           textColor: Colors.white,
@@ -347,7 +347,7 @@ class _FileUploadWithSubtitleListState extends State<FileUploadWithSubtitleList>
                     ),
                   ),
                   CustomButton(
-                    title: 'Upload',
+                    text: 'Upload',
                     borderRadius: 30,
                     textColor: Colors.white,
                     buttonColor: primaryColor,
