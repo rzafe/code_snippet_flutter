@@ -48,9 +48,9 @@ class CustomBulletText extends StatelessWidget {
           children: [
             if (bullet.isNotEmpty) ...[
               CustomText(
-                title: bullet,
+                text: bullet,
                 fontSize: bulletSize ?? 13,
-                textColor: bulletColor ?? Colors.black,
+                color: bulletColor ?? Colors.black,
                 fontWeight: bulletFontWeight ?? FontWeight.normal,
                 maxLines: 1,
               ),
@@ -58,9 +58,9 @@ class CustomBulletText extends StatelessWidget {
             ],
             Expanded(
               child: CustomText(
-                title: title,
+                text: title,
                 fontSize: fontSize ?? 13,
-                textColor: textColor ?? Colors.black,
+                color: textColor ?? Colors.black,
                 fontWeight: fontWeight ?? FontWeight.normal,
                 maxLines: maxLines,
                 overflow: overflow,

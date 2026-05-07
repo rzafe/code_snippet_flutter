@@ -74,9 +74,9 @@ class _DynamicRadioGroupState extends State<DynamicRadioGroup> {
             children: [
               if (widget.title != null && widget.title!.isNotEmpty) ...[
                 CustomText(
-                  title: widget.title ?? '',
+                  text: widget.title ?? '',
                   fontSize: widget.titleFontSize ?? 15,
-                  textColor: widget.titleTextColor ?? Colors.black,
+                  color: widget.titleTextColor ?? Colors.black,
                   fontWeight: widget.titleFontWeight ?? FontWeight.w500,
                 ),
                 const SizedBox(height: 8),
@@ -96,8 +96,8 @@ class _DynamicRadioGroupState extends State<DynamicRadioGroup> {
                       ),
                       child: RadioListTile<String>(
                         title: CustomText(
-                          title: option,
-                          textColor: widget.radioTextColor ?? Colors.black,
+                          text: option,
+                          color: widget.radioTextColor ?? Colors.black,
                           fontSize: widget.radioTextSize ?? 15,
                           fontWeight: widget.radioTextFontWeight,
                         ),
@@ -211,9 +211,9 @@ class _DynamicTwoSideRadioGroupState extends State<DynamicTwoSideRadioGroup> {
             children: [
               if (widget.title != null && widget.title!.isNotEmpty) ...[
                 CustomText(
-                  title: widget.title ?? '',
+                  text: widget.title ?? '',
                   fontSize: widget.titleFontSize ?? 15,
-                  textColor: widget.titleTextColor ?? Colors.black,
+                  color: widget.titleTextColor ?? Colors.black,
                   fontWeight: widget.titleFontWeight ?? FontWeight.w500,
                 ),
                 const SizedBox(height: 8),
@@ -239,8 +239,8 @@ class _DynamicTwoSideRadioGroupState extends State<DynamicTwoSideRadioGroup> {
                       ),
                       child: RadioListTile<String>(
                         title: CustomText(
-                          title: option,
-                          textColor: widget.radioTextColor ?? Colors.black,
+                          text: option,
+                          color: widget.radioTextColor ?? Colors.black,
                           fontSize: widget.radioTextSize ?? 15,
                           fontWeight: widget.radioTextFontWeight,
                         ),

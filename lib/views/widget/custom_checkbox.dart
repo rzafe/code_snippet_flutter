@@ -61,8 +61,8 @@ class CustomCheckBox extends StatelessWidget {
             const SizedBox(width: 5),
             Flexible(
               child: CustomText(
-                title: title,
-                textColor: isCheck
+                text: title,
+                color: isCheck
                     ? (textColorChecked ?? Colors.white)
                     : (textColorUnchecked ?? Colors.white),
                 fontSize: fontSize ?? 13,

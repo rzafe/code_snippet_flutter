@@ -65,8 +65,8 @@ class DefaultDialog2 extends StatelessWidget {
                             if (title != null &&
                                 title!.isNotEmpty) ...[
                               CustomText(
-                                title: title ?? '',
-                                textColor: Colors.black,
+                                text: title ?? '',
+                                color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 textAlign: TextAlign.center,
@@ -75,8 +75,8 @@ class DefaultDialog2 extends StatelessWidget {
                               Gap(10),
                             ],
                             CustomText(
-                              title: message,
-                              textColor: Colors.black,
+                              text: message,
+                              color: Colors.black,
                               fontSize: 14,
                               textAlign: TextAlign.center,
                               margin: const EdgeInsets.only(bottom: 10),
@@ -91,10 +91,10 @@ class DefaultDialog2 extends StatelessWidget {
                                   Expanded(
                                     child: Center(
                                       child: CustomText(
-                                        title: cancelTextButton ?? 'CANCEL',
+                                        text: cancelTextButton ?? 'CANCEL',
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        textColor: Colors.red,
+                                        color: Colors.red,
                                         margin: const EdgeInsets.symmetric(vertical: 5),
                                         onTap: onTapCancel ?? () {
                                           Navigator.pop(context);
@@ -108,10 +108,10 @@ class DefaultDialog2 extends StatelessWidget {
                                   Expanded(
                                     child: Center(
                                       child: CustomText(
-                                        title: okTextButton ?? 'OK',
+                                        text: okTextButton ?? 'OK',
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        textColor: primaryColor,
+                                        color: primaryColor,
                                         margin: const EdgeInsets.symmetric(vertical: 5),
                                         onTap: onTapOK,
                                       ),

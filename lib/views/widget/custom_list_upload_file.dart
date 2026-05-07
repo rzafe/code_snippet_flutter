@@ -93,9 +93,9 @@ class FileUploadList extends FormField<Map<String, String>> {
                         color: Colors.white,
                       ),
                       title: const CustomText(
-                        title: 'Take a Photo',
+                        text: 'Take a Photo',
                         fontSize: 15,
-                        textColor: Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         margin: EdgeInsets.zero,
                       ),
@@ -110,9 +110,9 @@ class FileUploadList extends FormField<Map<String, String>> {
                         color: Colors.white,
                       ),
                       title: const CustomText(
-                        title: 'Choose from files',
+                        text: 'Choose from files',
                         fontSize: 15,
-                        textColor: Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         margin: EdgeInsets.zero,
                       ),
@@ -142,7 +142,7 @@ class FileUploadList extends FormField<Map<String, String>> {
                       children: [
                         Expanded(
                           child: CustomText(
-                            title: file,
+                            text: file,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                           ),
@@ -179,9 +179,9 @@ class FileUploadList extends FormField<Map<String, String>> {
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 5),
                 child: CustomText(
-                  title: field.errorText ?? '',
+                  text: field.errorText ?? '',
                   fontSize: 13,
-                  textColor: Colors.red,
+                  color: Colors.red,
                 ),
               ),
           ],
@@ -278,9 +278,9 @@ class _FileUploadWithSubtitleListState extends State<FileUploadWithSubtitleList>
                   color: Colors.white,
                 ),
                 title: const CustomText(
-                  title: 'Take a Photo',
+                  text: 'Take a Photo',
                   fontSize: 15,
-                  textColor: Colors.white,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   margin: EdgeInsets.zero,
                 ),
@@ -295,9 +295,9 @@ class _FileUploadWithSubtitleListState extends State<FileUploadWithSubtitleList>
                   color: Colors.white,
                 ),
                 title: const CustomText(
-                  title: 'Choose from files',
+                  text: 'Choose from files',
                   fontSize: 15,
-                  textColor: Colors.white,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   margin: EdgeInsets.zero,
                 ),
@@ -333,15 +333,15 @@ class _FileUploadWithSubtitleListState extends State<FileUploadWithSubtitleList>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          title: title,
+                          text: title,
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                         ),
                         CustomText(
-                          title: subtitle,
+                          text: subtitle,
                           fontSize: 13,
                           fontWeight: FontWeight.normal,
-                          textColor: Colors.grey,
+                          color: Colors.grey,
                         ),
                       ],
                     ),

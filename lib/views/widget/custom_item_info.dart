@@ -54,18 +54,18 @@ class CustomItemInfo extends StatelessWidget {
             SizedBox(
               width: titleWidth,
               child: CustomText(
-                title: showColon ? '$title:' : title,
+                text: showColon ? '$title:' : title,
                 fontSize: titleFontSize ?? 13,
-                textColor: titleColor ?? Colors.black,
+                color: titleColor ?? Colors.black,
                 fontWeight: titleFontWeight ?? FontWeight.normal,
                 maxLines: titleMaxLines,
               ),
             )
           else
             CustomText(
-              title: showColon ? '$title:' : title,
+              text: showColon ? '$title:' : title,
               fontSize: titleFontSize ?? 13,
-              textColor: titleColor ?? Colors.black,
+              color: titleColor ?? Colors.black,
               fontWeight: titleFontWeight ?? FontWeight.normal,
               maxLines: titleMaxLines,
             ),
@@ -76,9 +76,9 @@ class CustomItemInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: CustomText(
-                title: info,
+                text: info,
                 fontSize: infoFontSize ?? 13,
-                textColor: infoColor ?? Colors.black,
+                color: infoColor ?? Colors.black,
                 fontWeight: infoFontWeight ?? FontWeight.normal,
                 maxLines: infoMaxLines,
                 overflow: TextOverflow.ellipsis,

@@ -81,9 +81,9 @@ class DropDownButtonWidget extends StatelessWidget {
             isExpanded: true,
             barrierColor: Colors.black.withValues(alpha: .1),
             hint: CustomText(
-              title: hint ?? '',
+              text: hint ?? '',
               fontSize: hintFontSize ?? 15,
-              textColor: hintTextColor ?? Colors.grey,
+              color: hintTextColor ?? Colors.grey,
               textAlign: TextAlign.start,
               isCustomFont: isCustomFont,
             ),
@@ -261,9 +261,9 @@ class _FormDefaultPickerState extends State<FormDefaultPicker> {
                     .map((String item) => DropdownMenuItem<String>(
                   value: item,
                   child: CustomText(
-                    title: item,
+                    text: item,
                     fontSize: widget.fontSize ?? 15,
-                    textColor: widget.textColor ?? Colors.black,
+                    color: widget.textColor ?? Colors.black,
                     fontWeight: widget.fontWeight ?? FontWeight.normal,
                   ),
                 )).toList(),
@@ -381,9 +381,9 @@ class _FormRegionPickerState extends State<FormRegionPicker> {
                         .map((PHLocation item) => DropdownMenuItem<String>(
                       value: item.region,
                       child: CustomText(
-                        title: item.region ?? '',
+                        text: item.region ?? '',
                         fontSize: widget.fontSize ?? 15,
-                        textColor: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
+                        color: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
                         fontWeight: widget.fontWeight ?? FontWeight.normal,
                       ),
                     )).toList(),
@@ -503,9 +503,9 @@ class _FormProvincePickerState extends State<FormProvincePicker> {
                         .map((PHLocation item) => DropdownMenuItem<String>(
                       value: item.province,
                       child: CustomText(
-                        title: item.province ?? '',
+                        text: item.province ?? '',
                         fontSize: widget.fontSize ?? 15,
-                        textColor: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
+                        color: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
                         fontWeight: widget.fontWeight ?? FontWeight.normal,
                       ),
                     )).toList(),
@@ -625,9 +625,9 @@ class _FormCityPickerState extends State<FormCityPicker> {
                         .map((PHLocation item) => DropdownMenuItem<String>(
                       value: item.city_municipality,
                       child: CustomText(
-                        title: item.city_municipality ?? '',
+                        text: item.city_municipality ?? '',
                         fontSize: widget.fontSize ?? 15,
-                        textColor: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
+                        color: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
                         fontWeight: widget.fontWeight ?? FontWeight.normal,
                       ),
                     )).toList(),
@@ -747,9 +747,9 @@ class _FormBarangayPickerState extends State<FormBarangayPicker> {
                         .map((PHLocation item) => DropdownMenuItem<String>(
                       value: item.barangay,
                       child: CustomText(
-                        title: item.barangay ?? '',
+                        text: item.barangay ?? '',
                         fontSize: widget.fontSize ?? 15,
-                        textColor: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
+                        color: widget.textColor ?? (widget.isEnabled ? Colors.black : Colors.grey),
                         fontWeight: widget.fontWeight ?? FontWeight.normal,
                       ),
                     )).toList(),

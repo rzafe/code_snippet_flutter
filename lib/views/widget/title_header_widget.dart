@@ -46,9 +46,9 @@ class TitleHeaderWidget extends StatelessWidget {
           children: [
             Expanded(
               child: CustomText(
-                title: title,
+                text: title,
                 fontSize: titleFontSize ?? 18,
-                textColor: titleTextColor ?? Colors.black,
+                color: titleTextColor ?? Colors.black,
                 fontWeight: titleFontWeight ?? FontWeight.w600,
               ),
             ),
@@ -60,9 +60,9 @@ class TitleHeaderWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomText(
-                      title: textButton,
+                      text: textButton,
                       fontSize: textButtonFontSize ?? 13,
-                      textColor: textButtonColor ?? greyColor,
+                      color: textButtonColor ?? greyColor,
                       fontWeight: textButtonFontWeight ?? FontWeight.normal,
                     ),
                     SizedBox(width: 5,),

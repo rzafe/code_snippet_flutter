@@ -50,9 +50,9 @@ class DynamicCheckboxList extends StatelessWidget {
             onChanged?.call(updated);
           },
           title: CustomText(
-            title: item,
+            text: item,
             fontSize: 14,
-            textColor: Colors.black87,
+            color: Colors.black87,
           ),
         );
       },
@@ -183,9 +183,9 @@ class _DynamicCheckboxWithOthersListState extends State<DynamicCheckboxWithOther
               value: isChecked,
               onChanged: (value) => _handleCheckboxChanged(item, value),
               title: CustomText(
-                title: item,
+                text: item,
                 fontSize: 14,
-                textColor: Colors.black87,
+                color: Colors.black87,
               ),
             ),
             if (isOther && isChecked)

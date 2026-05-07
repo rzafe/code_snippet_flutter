@@ -49,10 +49,10 @@ class VerifyMobileTextField extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomText(
-                    title: 'Code',
+                    text: 'Code',
                     fontWeight: FontWeight.normal,
                     fontSize: 10,
-                    textColor: Colors.grey[700],
+                    color: Colors.grey[700],
                     fontStyle: FontStyle.normal,
                     textAlign: TextAlign.start,
                   ),
@@ -70,10 +70,10 @@ class VerifyMobileTextField extends StatelessWidget {
                         width: 5,
                       ),
                       const CustomText(
-                        title: '+63',
+                        text: '+63',
                         fontWeight: FontWeight.normal,
                         fontSize: 15,
-                        textColor: Colors.black,
+                        color: Colors.black,
                         fontStyle: FontStyle.normal,
                         textAlign: TextAlign.end,
                       ),

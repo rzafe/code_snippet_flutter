@@ -718,8 +718,8 @@ void showSnackBar(BuildContext context, {
 }) {
   final SnackBar snackBar = SnackBar(
     content: CustomText(
-      title: message,
-      textColor: Colors.white,
+      text: message,
+      color: Colors.white,
     ),
     duration: const Duration(seconds: 3),
     action: null,
@@ -731,8 +731,8 @@ void showSnackBar(BuildContext context, {
 void showSnackBarNormal(BuildContext context, {required String message}) {
   final SnackBar snackBar = SnackBar(
     content: CustomText(
-      title: message,
-      textColor: Colors.white,
+      text: message,
+      color: Colors.white,
     ),
     duration: const Duration(seconds: 3),
     action: null,
@@ -744,8 +744,8 @@ void showSnackBarNormal(BuildContext context, {required String message}) {
 void showSnackBarError(BuildContext context, {required String message}) {
   final SnackBar snackBar = SnackBar(
     content: CustomText(
-      title: message,
-      textColor: Colors.white,
+      text: message,
+      color: Colors.white,
     ),
     duration: const Duration(seconds: 3),
     action: null,

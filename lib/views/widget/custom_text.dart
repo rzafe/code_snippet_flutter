@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomText extends StatelessWidget {
-  final String title;
-  final Color? textColor;
+  final String text;
+  final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -22,8 +22,8 @@ class CustomText extends StatelessWidget {
 
   const CustomText({
     super.key,
-    required this.title,
-    this.textColor,
+    required this.text,
+    this.color,
     this.fontSize,
     this.fontWeight,
     this.fontStyle,
@@ -50,10 +50,10 @@ class CustomText extends StatelessWidget {
         child: GestureDetector(
           onTap: onTap,
           child: Text(
-            title,
+            text,
             style: isCustomFont
                 ? GoogleFonts.poppins(
-                    color: textColor ?? Colors.black,
+                    color: color ?? Colors.black,
                     fontSize: fontSize ?? 13,
                     fontWeight: fontWeight ?? FontWeight.normal,
                     fontStyle: fontStyle,
@@ -63,7 +63,7 @@ class CustomText extends StatelessWidget {
                     wordSpacing: wordSpacing,
                   )
                 : TextStyle(
-                    color: textColor ?? Colors.black,
+                    color: color ?? Colors.black,
                     fontSize: fontSize ?? 13,
                     fontWeight: fontWeight ?? FontWeight.normal,
                     fontStyle: fontStyle,

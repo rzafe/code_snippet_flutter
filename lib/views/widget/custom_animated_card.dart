@@ -48,9 +48,9 @@ class CustomAnimatedCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
-                    title: title,
+                    text: title,
                     fontSize: 13,
-                    textColor: Colors.white,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                   Icon(

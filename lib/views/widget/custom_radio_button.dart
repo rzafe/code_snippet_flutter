@@ -53,8 +53,8 @@ class CustomRadioButton extends StatelessWidget {
               ),
               SizedBox(width: 5,),
               CustomText(
-                title: title,
-                textColor: textColor,
+                text: title,
+                color: textColor,
                 fontSize: fontSize,
               ),
             ],

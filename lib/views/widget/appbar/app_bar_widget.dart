@@ -27,9 +27,9 @@ PreferredSizeWidget appBarWidget(BuildContext context, {
 }) {
   return AppBar(
     title: titleWidget ?? CustomText(
-      title: title ?? '',
+      text: title ?? '',
       fontSize: fontSize ?? 20,
-      textColor: textColor ?? Colors.black,
+      color: textColor ?? Colors.black,
       fontWeight: fontWeight ?? FontWeight.w600,
       maxLines: maxLines,
     ),

@@ -66,15 +66,15 @@ class DefaultDialog extends StatelessWidget {
                         child: Column(
                           children: [
                             CustomText(
-                              title: title ?? '',
-                              textColor: Colors.black,
+                              text: title ?? '',
+                              color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                               visible: title != null ? true : false,
                             ),
                             CustomText(
-                              title: message,
-                              textColor: Colors.black,
+                              text: message,
+                              color: Colors.black,
                               fontSize: 13,
                               textAlign: TextAlign.center,
                               margin: EdgeInsets.only(left: 10, top: 10, right: 10),

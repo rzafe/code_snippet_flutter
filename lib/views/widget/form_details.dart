@@ -82,9 +82,9 @@ class FormDetails extends StatelessWidget {
                 ),
               ),
               child: CustomText(
-                title: value,
+                text: value,
                 fontSize: fontSize,
-                textColor: textColor,
+                color: textColor,
                 fontWeight: fontWeight,
               ),
             ),

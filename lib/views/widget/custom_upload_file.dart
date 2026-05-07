@@ -103,9 +103,9 @@ class _UploadRowState extends State<UploadRow> {
                   color: Colors.white,
                 ),
                 title: CustomText(
-                  title: 'Take a Photo',
+                  text: 'Take a Photo',
                   fontSize: 15,
-                  textColor: Colors.white,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   margin: EdgeInsets.zero,
                 ),
@@ -120,9 +120,9 @@ class _UploadRowState extends State<UploadRow> {
                   color: Colors.white,
                 ),
                 title: CustomText(
-                  title: 'Choose from files',
+                  text: 'Choose from files',
                   fontSize: 15,
-                  textColor: Colors.white,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   margin: EdgeInsets.zero,
                 ),
@@ -152,22 +152,22 @@ class _UploadRowState extends State<UploadRow> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                    title: widget.title,
+                    text: widget.title,
                     fontSize: 14,
-                    textColor: Colors.black,
+                    color: Colors.black,
                     fontWeight: FontWeight.normal,
                   ),
                   CustomText(
-                    title: widget.description,
+                    text: widget.description,
                     fontSize: 12,
-                    textColor: Colors.grey,
+                    color: Colors.grey,
                     fontWeight: FontWeight.normal,
                   ),
                   if (_fileName != null && _fileName!.isNotEmpty)
                     CustomText(
-                      title: 'file: $_fileName',
+                      text: 'file: $_fileName',
                       fontSize: 13,
-                      textColor: Colors.red,
+                      color: Colors.red,
                       fontWeight: FontWeight.normal,
                     ),
                 ],

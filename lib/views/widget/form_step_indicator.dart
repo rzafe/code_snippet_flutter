@@ -82,8 +82,8 @@ class FormStepIndicator2 extends StatelessWidget {
                     : Colors.grey.shade300,
               ),
               child: CustomText(
-                title: '$step',
-                textColor: isActive ? primaryColor : Colors.grey,
+                text: '$step',
+                color: isActive ? primaryColor : Colors.grey,
                 fontWeight: FontWeight.bold,
               ),
             );

@@ -102,9 +102,9 @@ class CustomButton extends StatelessWidget {
                 ],
                 Flexible(
                   child: CustomText(
-                    title: title,
+                    text: title,
                     fontSize: fontSize,
-                    textColor: textColor,
+                    color: textColor,
                     fontWeight: fontWeight,
                     fontStyle: fontStyle,
                     fontFamily: fontFamily,

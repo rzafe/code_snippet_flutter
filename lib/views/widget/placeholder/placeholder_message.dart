@@ -37,9 +37,9 @@ class PlaceholderMessage extends StatelessWidget {
           height: heightHolder ?? height(context) * .1,
           child: Center(
             child: CustomText(
-              title: message,
+              text: message,
               fontSize: fontSize ?? 15,
-              textColor: textColor ?? Colors.grey,
+              color: textColor ?? Colors.grey,
               fontWeight: fontWeight ?? FontWeight.normal,
             ),
           ),
