@@ -10,16 +10,14 @@ class DynamicRadioGroup extends StatefulWidget {
   final double? titleFontSize;
   final Color? titleTextColor;
   final FontWeight? titleFontWeight;
-  final double? radioTextSize;
-  final Color? radioTextColor;
-  final FontWeight? radioTextFontWeight;
   final Color? backgroundColor;
   final Color? borderColor;
-  final Color? selectedColor;
-  final Color? unselectedColor;
+  final double? radioFontSize;
   final bool visible;
   final EdgeInsets margin;
   final EdgeInsets? padding;
+  final EdgeInsets? titlePadding;
+  final Widget? bottomWidget;
   final ValueChanged<String?> onChanged;
 
   const DynamicRadioGroup({
@@ -30,16 +28,14 @@ class DynamicRadioGroup extends StatefulWidget {
     this.titleFontSize,
     this.titleTextColor,
     this.titleFontWeight,
-    this.radioTextSize,
-    this.radioTextColor,
-    this.radioTextFontWeight,
     this.backgroundColor,
     this.borderColor,
-    this.selectedColor,
-    this.unselectedColor,
+    this.radioFontSize,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.padding,
+    this.titlePadding,
+    this.bottomWidget,
     required this.onChanged,
   });
 
@@ -57,13 +53,21 @@ class _DynamicRadioGroupState extends State<DynamicRadioGroup> {
   }
 
   @override
+  void didUpdateWidget(covariant DynamicRadioGroup oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialValue != widget.initialValue) {
+      _selectedValue = widget.initialValue;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: widget.visible,
       child: Padding(
         padding: widget.margin,
         child: Container(
-          padding: widget.padding ?? EdgeInsets.all(12),
+          padding: widget.padding ?? const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: widget.backgroundColor ?? secondaryColor.withValues(alpha: .2),
             borderRadius: BorderRadius.circular(15),
@@ -78,10 +82,9 @@ class _DynamicRadioGroupState extends State<DynamicRadioGroup> {
                   fontSize: widget.titleFontSize ?? 15,
                   color: widget.titleTextColor ?? Colors.black,
                   fontWeight: widget.titleFontWeight ?? FontWeight.w500,
+                  margin: widget.titlePadding ?? EdgeInsets.zero,
                 ),
-                const SizedBox(height: 8),
               ],
-
               RadioGroup<String>(
                 groupValue: _selectedValue,
                 onChanged: (value) {
@@ -97,20 +100,16 @@ class _DynamicRadioGroupState extends State<DynamicRadioGroup> {
                       child: RadioListTile<String>(
                         title: CustomText(
                           text: option,
-                          color: widget.radioTextColor ?? Colors.black,
-                          fontSize: widget.radioTextSize ?? 15,
-                          fontWeight: widget.radioTextFontWeight,
+                          color: Colors.black,
+                          fontSize: widget.radioFontSize ?? 15,
                         ),
                         value: option,
-                        /// ✅ REAL COLOR CONTROL
-                        fillColor: WidgetStateProperty.resolveWith((states) {
-                          if (states.contains(WidgetState.selected)) {
-                            return widget.selectedColor ?? primaryColor; // selected color
-                          }
-                          return widget.unselectedColor ?? primaryColor; // unselected color
-                        }),
+                        toggleable: true,
+                        activeColor: primaryColor,
+                        radioSide: const BorderSide(color: Colors.grey, width: 2),
                         controlAffinity: ListTileControlAffinity.leading,
                         visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         dense: true,
                         contentPadding: EdgeInsets.zero,
                       ),
@@ -118,6 +117,7 @@ class _DynamicRadioGroupState extends State<DynamicRadioGroup> {
                   }).toList(),
                 ),
               ),
+              if (widget.bottomWidget != null) widget.bottomWidget!,
             ],
           ),
         ),
@@ -134,13 +134,8 @@ class DynamicTwoSideRadioGroup extends StatefulWidget {
   final double? titleFontSize;
   final Color? titleTextColor;
   final FontWeight? titleFontWeight;
-  final double? radioTextSize;
-  final Color? radioTextColor;
-  final FontWeight? radioTextFontWeight;
   final Color? backgroundColor;
   final Color? borderColor;
-  final Color? selectedColor;
-  final Color? unselectedColor;
   final bool visible;
   final EdgeInsets margin;
   final EdgeInsets? padding;
@@ -155,13 +150,8 @@ class DynamicTwoSideRadioGroup extends StatefulWidget {
     this.titleFontSize,
     this.titleTextColor,
     this.titleFontWeight,
-    this.radioTextSize,
-    this.radioTextColor,
-    this.radioTextFontWeight,
     this.backgroundColor,
     this.borderColor,
-    this.selectedColor,
-    this.unselectedColor,
     this.visible = true,
     this.margin = EdgeInsets.zero,
     this.padding,
@@ -200,7 +190,7 @@ class _DynamicTwoSideRadioGroupState extends State<DynamicTwoSideRadioGroup> {
       child: Padding(
         padding: widget.margin,
         child: Container(
-          padding: widget.padding ?? EdgeInsets.all(12),
+          padding: widget.padding ?? const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: widget.backgroundColor ?? secondaryColor.withValues(alpha: .2),
             borderRadius: BorderRadius.circular(15),
@@ -223,7 +213,7 @@ class _DynamicTwoSideRadioGroupState extends State<DynamicTwoSideRadioGroup> {
                 crossAxisCount: crossAxisCount,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                childAspectRatio: isTablet ? 7.9 : 3.95,
+                childAspectRatio: 3.95,
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 12,
                 children: widget.options.map((option) {
@@ -240,18 +230,11 @@ class _DynamicTwoSideRadioGroupState extends State<DynamicTwoSideRadioGroup> {
                       child: RadioListTile<String>(
                         title: CustomText(
                           text: option,
-                          color: widget.radioTextColor ?? Colors.black,
-                          fontSize: widget.radioTextSize ?? 15,
-                          fontWeight: widget.radioTextFontWeight,
+                          color: Colors.black,
+                          fontSize: 15,
                         ),
                         value: option,
-                        /// ✅ REAL COLOR CONTROL
-                        fillColor: WidgetStateProperty.resolveWith((states) {
-                          if (states.contains(WidgetState.selected)) {
-                            return widget.selectedColor ?? primaryColor; // selected color
-                          }
-                          return widget.unselectedColor ?? primaryColor; // unselected color
-                        }),
+                        toggleable: true,
                         controlAffinity: ListTileControlAffinity.leading,
                         visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                         dense: true,
@@ -269,7 +252,7 @@ class _DynamicTwoSideRadioGroupState extends State<DynamicTwoSideRadioGroup> {
                   maxLines: 1,
                   borderRadius: 30,
                   enabledBorderColor: Colors.transparent,
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   onChanged: widget.onOtherChanged,
                 ),
               ],
