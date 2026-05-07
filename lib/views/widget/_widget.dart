@@ -4,6 +4,7 @@ export 'custom_animated_card.dart';
 export 'custom_broken_line.dart';
 export 'custom_bullet_text.dart';
 export 'custom_button.dart';
+export 'custom_button_icon.dart';
 export 'custom_card.dart';
 export 'custom_checkbox.dart';
 export 'custom_checkbox_list.dart';
