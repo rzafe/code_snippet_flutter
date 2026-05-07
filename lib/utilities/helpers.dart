@@ -236,7 +236,7 @@ String generateRandomString(int len) {
   return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
 }
 
-/// Files ----------------------------------------------------------------------
+/// Clear Data -----------------------------------------------------------------
 Future<void> clearCache() async {
   try {
     final cacheDir = await getTemporaryDirectory();
@@ -261,12 +261,23 @@ Future<void> clearAppData() async {
   }
 }
 
+/// File -----------------------------------------------------------------------
 String getFileExtension(String filePath) {
   return extension(filePath);
 }
 
 String getFileName(File file) {
   return path.basename(file.path);
+}
+
+Future<Uint8List?> fileToUint8List(File? captureID) async {
+  if (captureID == null) return null;
+  return await captureID.readAsBytes();
+}
+
+Future<File> saveSignatureImage(Uint8List bytes) async {
+  final tempDir = await getApplicationDocumentsDirectory();
+  return await File("${tempDir.path}/signature.jpg").writeAsBytes(bytes);
 }
 
 String? getMimeTypeFromExtension(String ext) {
@@ -305,16 +316,6 @@ bool isVideo(String url) {
       url.endsWith('.flv') ||
       url.endsWith('.mkv') ||
       url.endsWith('.webm');
-}
-
-Future<Uint8List?> fileToUint8List(File? captureID) async {
-  if (captureID == null) return null;
-  return await captureID.readAsBytes();
-}
-
-Future<File> saveSignatureImage(Uint8List bytes) async {
-  final tempDir = await getApplicationDocumentsDirectory();
-  return await File("${tempDir.path}/signature.jpg").writeAsBytes(bytes);
 }
 
 Future<File?> pickImageFile() async {
@@ -376,16 +377,41 @@ bool isValidUrl(String url) {
 String capitalize(String input) =>
     input.isEmpty ? '' : input[0].toUpperCase() + input.substring(1).toLowerCase();
 
-String getFullName({String firstname = '', String middlename = '', String lastname = ''}) {
-  /// Trim all parts
-  final String f = capitalize(firstname.trim());
-  final String m = capitalize(middlename.trim());
-  final String l = capitalize(lastname.trim());
+String getFullName({
+  String? firstname,
+  String? middlename,
+  String? lastname,
+  String? suffix,
+  bool middleInitialOnly = false,
+  bool lastnameFirst = false,
+  bool uppercase = false,
+}) {
+  String format(String? value) {
+    final text = (value ?? '').trim();
 
-  /// Combine non-empty parts
-  final parts = [f, m, l].where((name) => name.isNotEmpty).toList();
+    if (text.isEmpty) return '';
 
-  return parts.join(' ');
+    final formatted = capitalize(text);
+
+    return uppercase ? formatted.toUpperCase() : formatted;
+  }
+
+  String middle = format(middlename);
+
+  /// Convert middle name to initial if enabled
+  if (middleInitialOnly && middle.isNotEmpty) {
+    middle = '${middle[0]}.';
+  }
+
+  final first = format(firstname);
+  final last = format(lastname);
+  final suf = format(suffix);
+
+  final parts = lastnameFirst
+      ? [last, first, middle, suf]
+      : [first, middle, last, suf];
+
+  return parts.where((e) => e.isNotEmpty).join(' ');
 }
 
 String normalizeSex(String? value) {
@@ -488,7 +514,7 @@ Future<String?> readSecureStorage({required String key}) async {
   return value;
 }
 
-/// Other Format ---------------------------------------------------------------
+/// Number ---------------------------------------------------------------------
 String formatNumber(String? number) {
   if (number == null || number.isEmpty) return '';
 
@@ -500,14 +526,29 @@ String formatNumber(String? number) {
   }
 }
 
-String formatNumberWithDecimal(String? number) {
-  if (number == null || number.isEmpty) return '';
+String formatNumber2(
+  String? number, {
+    int decimalPlaces = 2,
+    String fallback = '',
+  })
+{
+  if (number == null) return fallback;
+
+  final cleaned = number.replaceAll(',', '').trim();
+  if (cleaned.isEmpty) return fallback;
 
   try {
-    final parsed = double.parse(number);
-    return NumberFormat('#,##0.##').format(parsed); //e.g. 1,000.00
-  } catch (e) {
-    return ''; // or handle the error accordingly
+    final parsed = double.parse(cleaned);
+
+    final formatter = NumberFormat(
+      decimalPlaces > 0
+          ? '#,##0.${'0' * decimalPlaces}'
+          : '#,##0',
+    );
+
+    return formatter.format(parsed);
+  } catch (_) {
+    return fallback;
   }
 }
 
