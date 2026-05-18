@@ -25,18 +25,29 @@ jobs:
         run: flutter pub get
 
       - name: Analyze project
-#        run: flutter analyze
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Run tests
-#        run: flutter test
         run: flutter test || true
 
+      # Build APK
       - name: Build APK
         run: flutter build apk --release
 
+      # Build AAB (for Play Store upload)
+      - name: Build AAB
+        run: flutter build appbundle --release
+
+      # Upload APK artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      # Upload AAB artifact
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
